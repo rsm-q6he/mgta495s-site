@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Quarto local cache and non-publish output
+.quarto/
+_site/
+
+# Editor and notebook metadata
+.vscode/
+.ipynb_checkpoints/
+
+# Local development container
+.devcontainer/
