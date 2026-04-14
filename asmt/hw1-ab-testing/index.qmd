@@ -10,7 +10,6 @@ format:
   html:
     toc: true
     number-sections: false
-    theme: cosmo
     code-fold: false
     code-tools: false
 jupyter: python3

@@ -261,3 +261,15 @@ main.content img {
     height: 180px;
   }
 }
+
+.quarto-dark .card {
+  background: #1f2428;
+}
+
+.quarto-dark .listing-description {
+  color: #d0d7de;
+}
+
+.quarto-dark .listing-date {
+  color: #9aa4af;
+}
