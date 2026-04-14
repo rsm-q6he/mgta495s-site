@@ -1,8 +1,0 @@
----
-title: "My Projects"
-listing:
-  contents: projects
-  type: grid
----
-
-Projects page coming soon.

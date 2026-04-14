@@ -1,0 +1,15 @@
+---
+title: "Assignments"
+page-layout: full
+listing:
+  contents: asmt
+  type: grid
+  sort: "date desc"
+  fields: [image, title, description, date]
+  image-height: 220px
+  categories: false
+  filter-ui: false
+  sort-ui: false
+---
+
+This page collects course assignments and write-ups from MGTA495.

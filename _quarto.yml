@@ -8,10 +8,8 @@ website:
     left:
       - href: index.qmd
         text: About
-      - href: resume.qmd
-        text: Resume
-      - href: projects.qmd
-        text: Projects
+      - href: assignments.qmd
+        text: Assignments
     right:
       - icon: github
         href: https://github.com/rsm-q6he

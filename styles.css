@@ -12,11 +12,6 @@ main.content {
   padding-top: 2rem;
 }
 
-/* Hide empty title block on homepage */
-.quarto-title-block {
-  display: none;
-}
-
 /* Navbar */
 .navbar {
   min-height: 64px;
@@ -48,6 +43,11 @@ main.content {
   grid-template-columns: 300px 1fr;
   column-gap: 3.25rem;
   align-items: start;
+}
+
+/* Hide title block only on homepage if homepage class is used */
+.homepage .quarto-title-block {
+  display: none;
 }
 
 .profile-column {
@@ -125,6 +125,14 @@ h3 {
   border-bottom: none;
 }
 
+h1.title {
+  margin-bottom: 0.4rem;
+}
+
+.quarto-title-meta {
+  margin-bottom: 1.5rem;
+}
+
 /* Links */
 a {
   text-decoration: none;
@@ -142,6 +150,90 @@ a:hover {
   margin-top: 2rem;
 }
 
+/* Listing pages */
+.quarto-listing {
+  margin-top: 1.25rem;
+}
+
+.quarto-grid {
+  gap: 1.5rem;
+}
+
+/* Listing card layout */
+.quarto-listing-grid .card {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  height: 100%;
+  background: #fff;
+}
+
+.quarto-listing-grid .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+}
+
+.quarto-listing-grid .card-img-top {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.quarto-listing-grid .card-body {
+  padding: 1rem 1rem 1.1rem 1rem;
+}
+
+.quarto-listing-grid .card-title,
+.quarto-listing-grid .listing-title {
+  font-size: 1.15rem;
+  line-height: 1.3;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.quarto-listing-grid .card-subtitle,
+.quarto-listing-grid .listing-subtitle {
+  font-size: 0.98rem;
+  color: #666;
+  margin-bottom: 0.45rem;
+}
+
+.quarto-listing-grid .card-text,
+.quarto-listing-grid .listing-description {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.55;
+}
+
+.quarto-listing-grid .listing-date,
+.quarto-listing-grid .card-attribution {
+  font-size: 0.82rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-top: 0.75rem;
+}
+
+/* Make single-column listing pages feel a bit more spacious */
+#quarto-content main.content:has(.quarto-listing) {
+  max-width: 1200px;
+}
+
+/* Images inside posts */
+.quarto-post .quarto-figure,
+main.content .quarto-figure {
+  margin-top: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+main.content img {
+  max-width: 100%;
+  height: auto;
+}
+
 /* Mobile */
 @media (max-width: 900px) {
   .homepage {
@@ -157,5 +249,15 @@ a:hover {
 
   .profile-column {
     padding-top: 0.5rem;
+  }
+
+  main.content {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .quarto-listing-grid .card-img-top {
+    height: 180px;
   }
 }

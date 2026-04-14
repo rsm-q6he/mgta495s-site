@@ -2,8 +2,13 @@
   {
     "listing": "/projects.html",
     "items": [
-      "/projects/project1/index.html",
-      "/projects/project2/index.html"
+      "/projects/hw1-ab-testing/index.html"
+    ]
+  },
+  {
+    "listing": "/assignments.html",
+    "items": [
+      "/asmt/hw1-ab-testing/index.html"
     ]
   }
 ]
