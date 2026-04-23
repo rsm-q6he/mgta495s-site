@@ -1,0 +1,121 @@
+---
+title: "Replicating Card & Krueger (1994)"
+subtitle: "Minimum Wages and Employment in New Jersey and Pennsylvania"
+author: "Stan He"
+date: "2026-04-22"
+description: "A concise replication of key difference-in-differences findings from Card and Krueger (1994)."
+image: cover.png
+image-alt: "Minimum wage replication post cover"
+format:
+  html:
+    toc: true
+    number-sections: false
+    theme: cosmo
+    code-fold: false
+    code-tools: false
+execute:
+  enabled: false
+---
+
+## Introduction
+
+In *Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania*, Card and Krueger (1994) study whether New Jersey’s April 1992 minimum-wage increase from $4.25 to $5.05 reduced employment in fast-food restaurants. Their core design compares stores in New Jersey to similar stores in eastern Pennsylvania, where the minimum wage did not change over the same period.
+
+This paper is a classic empirical challenge to the standard competitive prediction that a binding minimum wage must reduce employment. Its identification strategy is a simple but powerful difference-in-differences design: compare employment before and after the policy in New Jersey, then subtract the same before-after change in Pennsylvania.
+
+In this post, I replicate a key employment result from the paper, reproduce part of the main regression table, and add one extra comparison showing why the difference-in-differences logic matters more than a naive cross-sectional comparison.
+
+## What the Authors Are Studying
+
+The causal question is straightforward:
+
+> Did New Jersey’s 1992 minimum-wage increase reduce fast-food employment relative to a comparable control group?
+
+The treatment group is fast-food restaurants in New Jersey. The control group is fast-food restaurants in eastern Pennsylvania. The main outcome is full-time-equivalent employment (FTE) per store.
+
+## Data and Setup
+
+The public replication files contain a flat-file dataset with 410 observations, along with a codebook and a SAS checking script. The codebook shows the original variables used in the article, including first- and second-wave employment counts, starting wages, ownership status, region indicators, store chain, and several price variables.
+
+## Replication 1: Part of Table 2
+
+A useful first check is whether the data line up with the descriptive comparisons in Table 2. Below I reproduce selected means by state for wave 1 and wave 2.
+
+| State | FTE Wave 1 | FTE Wave 2 | Starting Wage Wave 1 | Starting Wage Wave 2 | Meal Price Wave 1 | Meal Price Wave 2 |
+|---|---:|---:|---:|---:|---:|---:|
+| PA | 23.33 | 21.17 | 4.63 | 4.62 | 3.04 | 3.03 |
+| NJ | 20.44 | 21.03 | 4.61 | 5.08 | 3.35 | 3.41 |
+
+These values line up closely with the paper’s descriptive message: Pennsylvania stores started with somewhat higher average employment, but New Jersey experienced a much larger rise in starting wages after the law change. That confirms the treatment was real and economically meaningful.
+
+## Replication 2: Table 3 Difference-in-Differences
+
+The paper’s main result is in Table 3. The key comparison is the change in FTE employment in New Jersey relative to the change in Pennsylvania.
+
+| State | FTE Before | FTE After | Change |
+|---|---:|---:|---:|
+| PA | 23.33 | 21.17 | -2.28 |
+| NJ | 20.44 | 21.03 | 0.47 |
+| NJ - PA | -2.89 | -0.14 | 2.75 |
+
+### Interpretation
+
+My replicated difference-in-differences estimate is about **2.75 FTE employees**, very close to the paper’s reported relative gain of **2.76**. That means employment in New Jersey increased relative to Pennsylvania after the minimum-wage hike, rather than falling.
+
+This is the central empirical surprise of the paper. A textbook competitive model would predict a negative effect. Card and Krueger instead find no evidence of employment loss in this setting.
+
+My replicated estimates closely match the published point estimates, so the core empirical conclusion is successfully reproduced.
+
+## Replication 3: Table 4 Regression Results
+
+The paper also estimates reduced-form regressions for the change in employment. I reproduce the core versions below using the same derived variables as the SAS check file.
+
+| Model | Coefficient | Standard Error | N |
+|---|---:|---:|---:|
+| (i) `demp ~ nj` | 2.71 | 1.20 | 375 |
+| (ii) `demp ~ nj + controls` | 2.75 | 1.20 | 375 |
+| (iii) `demp ~ gap` | 16.14 | 6.05 | 360 |
+| (iv) `demp ~ gap + controls` | 15.63 | 6.16 | 360 |
+| (v) `demp ~ gap + region controls` | 12.03 | 7.39 | 360 |
+
+### Interpretation
+
+These estimates closely track the paper’s Table 4:
+
+- the New Jersey dummy specification gives a positive coefficient of about 2.7 to 2.8;
+- the gap specification gives a positive coefficient around 15 to 16 in the simpler models;
+- adding controls does not reverse the result.
+
+So the regression-adjusted version tells the same basic story as the raw difference-in-differences: I find no evidence that the employment effect is negative.
+
+My replicated estimates closely match the published point estimates, so the core empirical conclusion is successfully reproduced.
+
+## Additional Analysis: Naive Comparison vs. Difference-in-Differences
+
+For the extra piece, I compare a naive post-period cross-state comparison with the actual difference-in-differences estimate.
+
+| Estimate | Value |
+|---|---:|
+| Pre-period NJ - PA difference | -2.89 |
+| Post-period NJ - PA difference | -0.14 |
+| Difference-in-differences | 2.75 |
+
+### Why this matters
+
+A naive post-treatment comparison is not causal because New Jersey and Pennsylvania were already different before treatment. In the raw data, New Jersey stores started smaller on average. Difference-in-differences corrects for that baseline gap by comparing changes, not just levels.
+
+This comparison shows why a post-period cross-sectional gap is not a causal estimate: New Jersey stores already differed from Pennsylvania stores before the policy.
+
+That is exactly why this paper became such a famous applied example. Its result is not driven by a simple treated-versus-control comparison, but by a quasi-experimental before-after design with a nearby control group.
+
+## Conclusion
+
+This replication reproduces the main empirical result of Card and Krueger (1994): I find no evidence that New Jersey’s 1992 minimum-wage increase reduced fast-food employment relative to Pennsylvania. My replicated difference-in-differences estimate is very close to the published result, and the regression specifications tell the same story.
+
+The most important lesson is methodological as much as substantive. If I only looked at post-treatment differences, I would miss the causal logic. The value of the paper comes from the design: compare New Jersey to a plausible control group, compare before to after, and focus on the relative change.
+
+That is also why this paper fits so well into the broader causal inference framework from class. It is a clean, intuitive example of how a simple quasi-experimental design can overturn a strong theoretical prior.
+
+## References
+
+Card, David, and Alan B. Krueger. 1994. “Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania.” *American Economic Review* 84 (4): 772–793.

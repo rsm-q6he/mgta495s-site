@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Stan He">
+<meta name="dcterms.date" content="2026-04-22">
+<meta name="description" content="A concise replication of key difference-in-differences findings from Card and Krueger (1994).">
 
-<title>Assignments – Stan H.</title>
+<title>Replicating Card &amp; Krueger (1994) – Stan H.</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,30 +26,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ac077c1e730dfeb5e42400639d17284e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-ea00d30dd9b950c7ecb6e17bc6ca0835.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ac077c1e730dfeb5e42400639d17284e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-9947125b96a39b6e338232ca4cef18ae.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-8cc648523f10c6643ad8b4804917a629.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-9947125b96a39b6e338232ca4cef18ae.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ac077c1e730dfeb5e42400639d17284e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9947125b96a39b6e338232ca4cef18ae.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,249 +71,20 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-image','listing-title','listing-description','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
-    const toggleBodyColorMode = (bsSheetEl) => {
-      const mode = bsSheetEl.getAttribute("data-mode");
-      const bodyEl = window.document.querySelector("body");
-      if (mode === "dark") {
-        bodyEl.classList.add("quarto-dark");
-        bodyEl.classList.remove("quarto-light");
-      } else {
-        bodyEl.classList.add("quarto-light");
-        bodyEl.classList.remove("quarto-dark");
-      }
-    }
-    const toggleBodyColorPrimary = () => {
-      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
-      if (bsSheetEl) {
-        toggleBodyColorMode(bsSheetEl);
-      }
-    }
-    const setColorSchemeToggle = (alternate) => {
-      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-      for (let i=0; i < toggles.length; i++) {
-        const toggle = toggles[i];
-        if (toggle) {
-          if (alternate) {
-            toggle.classList.add("alternate");
-          } else {
-            toggle.classList.remove("alternate");
-          }
-        }
-      }
-    };
-    const toggleColorMode = (alternate) => {
-      // Switch the stylesheets
-      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
-      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-      manageTransitions('#quarto-margin-sidebar .nav-link', false);
-      if (alternate) {
-        // note: dark is layered on light, we don't disable primary!
-        enableStylesheet(alternateStylesheets);
-        for (const sheetNode of alternateStylesheets) {
-          if (sheetNode.id === "quarto-bootstrap") {
-            toggleBodyColorMode(sheetNode);
-          }
-        }
-      } else {
-        disableStylesheet(alternateStylesheets);
-        enableStylesheet(primaryStylesheets)
-        toggleBodyColorPrimary();
-      }
-      manageTransitions('#quarto-margin-sidebar .nav-link', true);
-      // Switch the toggles
-      setColorSchemeToggle(alternate)
-      // Hack to workaround the fact that safari doesn't
-      // properly recolor the scrollbar when toggling (#1455)
-      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-        manageTransitions("body", false);
-        window.scrollTo(0, 1);
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-          manageTransitions("body", true);
-        }, 40);
-      }
-    }
-    const disableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        stylesheet.rel = 'disabled-stylesheet';
-      }
-    }
-    const enableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
-          stylesheet.rel = 'stylesheet';
-        }
-      }
-    }
-    const manageTransitions = (selector, allowTransitions) => {
-      const els = window.document.querySelectorAll(selector);
-      for (let i=0; i < els.length; i++) {
-        const el = els[i];
-        if (allowTransitions) {
-          el.classList.remove('notransition');
-        } else {
-          el.classList.add('notransition');
-        }
-      }
-    }
-    const isFileUrl = () => {
-      return window.location.protocol === 'file:';
-    }
-    const hasAlternateSentinel = () => {
-      let styleSentinel = getColorSchemeSentinel();
-      if (styleSentinel !== null) {
-        return styleSentinel === "alternate";
-      } else {
-        return false;
-      }
-    }
-    const setStyleSentinel = (alternate) => {
-      const value = alternate ? "alternate" : "default";
-      if (!isFileUrl()) {
-        window.localStorage.setItem("quarto-color-scheme", value);
-      } else {
-        localAlternateSentinel = value;
-      }
-    }
-    const getColorSchemeSentinel = () => {
-      if (!isFileUrl()) {
-        const storageValue = window.localStorage.getItem("quarto-color-scheme");
-        return storageValue != null ? storageValue : localAlternateSentinel;
-      } else {
-        return localAlternateSentinel;
-      }
-    }
-    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-      let newTheme = '';
-      if(authorPrefersDark) {
-        newTheme = isAlternate ? baseTheme : alternateTheme;
-      } else {
-        newTheme = isAlternate ? alternateTheme : baseTheme;
-      }
-      const changeGiscusTheme = () => {
-        // From: https://github.com/giscus/giscus/issues/336
-        const sendMessage = (message) => {
-          const iframe = document.querySelector('iframe.giscus-frame');
-          if (!iframe) return;
-          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-        }
-        sendMessage({
-          setConfig: {
-            theme: newTheme
-          }
-        });
-      }
-      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-      if (isGiscussLoaded) {
-        changeGiscusTheme();
-      }
-    };
-    const authorPrefersDark = false;
-    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    const darkModeDefault = queryPrefersDark.matches;
-      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-    // Dark / light mode switch
-    window.quartoToggleColorScheme = () => {
-      // Read the current dark / light value
-      let toAlternate = !hasAlternateSentinel();
-      toggleColorMode(toAlternate);
-      setStyleSentinel(toAlternate);
-      toggleGiscusIfUsed(toAlternate, darkModeDefault);
-      window.dispatchEvent(new Event('resize'));
-    };
-    queryPrefersDark.addEventListener("change", e => {
-      if(window.localStorage.getItem("quarto-color-scheme") !== null)
-        return;
-      const alternate = e.matches
-      toggleColorMode(alternate);
-      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
-      toggleGiscusIfUsed(alternate, darkModeDefault);
-    });
-    // Switch to dark mode if need be
-    if (hasAlternateSentinel()) {
-      toggleColorMode(true);
-    } else {
-      toggleColorMode(false);
-    }
-  </script>
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Stan H.</span>
     </a>
   </div>
@@ -327,11 +95,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./assignments.html" aria-current="page"> 
+    <a class="nav-link" href="../../assignments.html"> 
 <span class="menu-text">Assignments</span></a>
   </li>  
 </ul>
@@ -344,30 +112,71 @@ window.Quarto = {
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#what-the-authors-are-studying" id="toc-what-the-authors-are-studying" class="nav-link" data-scroll-target="#what-the-authors-are-studying">What the Authors Are Studying</a></li>
+  <li><a href="#data-and-setup" id="toc-data-and-setup" class="nav-link" data-scroll-target="#data-and-setup">Data and Setup</a></li>
+  <li><a href="#replication-1-part-of-table-2" id="toc-replication-1-part-of-table-2" class="nav-link" data-scroll-target="#replication-1-part-of-table-2">Replication 1: Part of Table 2</a></li>
+  <li><a href="#replication-2-table-3-difference-in-differences" id="toc-replication-2-table-3-difference-in-differences" class="nav-link" data-scroll-target="#replication-2-table-3-difference-in-differences">Replication 2: Table 3 Difference-in-Differences</a>
+  <ul class="collapse">
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  </ul></li>
+  <li><a href="#replication-3-table-4-regression-results" id="toc-replication-3-table-4-regression-results" class="nav-link" data-scroll-target="#replication-3-table-4-regression-results">Replication 3: Table 4 Regression Results</a>
+  <ul class="collapse">
+  <li><a href="#interpretation-1" id="toc-interpretation-1" class="nav-link" data-scroll-target="#interpretation-1">Interpretation</a></li>
+  </ul></li>
+  <li><a href="#additional-analysis-naive-comparison-vs.-difference-in-differences" id="toc-additional-analysis-naive-comparison-vs.-difference-in-differences" class="nav-link" data-scroll-target="#additional-analysis-naive-comparison-vs.-difference-in-differences">Additional Analysis: Naive Comparison vs.&nbsp;Difference-in-Differences</a>
+  <ul class="collapse">
+  <li><a href="#why-this-matters" id="toc-why-this-matters" class="nav-link" data-scroll-target="#why-this-matters">Why this matters</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
-
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Assignments</h1>
+<h1 class="title">Replicating Card &amp; Krueger (1994)</h1>
+<p class="subtitle lead">Minimum Wages and Employment in New Jersey and Pennsylvania</p>
+</div>
+
+<div>
+  <div class="description">
+    A concise replication of key difference-in-differences findings from Card and Krueger (1994).
+  </div>
 </div>
 
 
+<div class="quarto-title-meta">
 
-<div class="quarto-title-meta column-page">
-
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Stan He </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 22, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -377,73 +186,216 @@ window.Quarto = {
 </header>
 
 
-<p>This page collects course assignments and write-ups from MGTA495.</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In <em>Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania</em>, Card and Krueger (1994) study whether New Jersey’s April 1992 minimum-wage increase from $4.25 to $5.05 reduced employment in fast-food restaurants. Their core design compares stores in New Jersey to similar stores in eastern Pennsylvania, where the minimum wage did not change over the same period.</p>
+<p>This paper is a classic empirical challenge to the standard competitive prediction that a binding minimum wage must reduce employment. Its identification strategy is a simple but powerful difference-in-differences design: compare employment before and after the policy in New Jersey, then subtract the same before-after change in Pennsylvania.</p>
+<p>In this post, I replicate a key employment result from the paper, reproduce part of the main regression table, and add one extra comparison showing why the difference-in-differences logic matters more than a naive cross-sectional comparison.</p>
+</section>
+<section id="what-the-authors-are-studying" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-authors-are-studying">What the Authors Are Studying</h2>
+<p>The causal question is straightforward:</p>
+<blockquote class="blockquote">
+<p>Did New Jersey’s 1992 minimum-wage increase reduce fast-food employment relative to a comparable control group?</p>
+</blockquote>
+<p>The treatment group is fast-food restaurants in New Jersey. The control group is fast-food restaurants in eastern Pennsylvania. The main outcome is full-time-equivalent employment (FTE) per store.</p>
+</section>
+<section id="data-and-setup" class="level2">
+<h2 class="anchored" data-anchor-id="data-and-setup">Data and Setup</h2>
+<p>The public replication files contain a flat-file dataset with 410 observations, along with a codebook and a SAS checking script. The codebook shows the original variables used in the article, including first- and second-wave employment counts, starting wages, ownership status, region indicators, store chain, and several price variables.</p>
+</section>
+<section id="replication-1-part-of-table-2" class="level2">
+<h2 class="anchored" data-anchor-id="replication-1-part-of-table-2">Replication 1: Part of Table 2</h2>
+<p>A useful first check is whether the data line up with the descriptive comparisons in Table 2. Below I reproduce selected means by state for wave 1 and wave 2.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>State</th>
+<th style="text-align: right;">FTE Wave 1</th>
+<th style="text-align: right;">FTE Wave 2</th>
+<th style="text-align: right;">Starting Wage Wave 1</th>
+<th style="text-align: right;">Starting Wage Wave 2</th>
+<th style="text-align: right;">Meal Price Wave 1</th>
+<th style="text-align: right;">Meal Price Wave 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PA</td>
+<td style="text-align: right;">23.33</td>
+<td style="text-align: right;">21.17</td>
+<td style="text-align: right;">4.63</td>
+<td style="text-align: right;">4.62</td>
+<td style="text-align: right;">3.04</td>
+<td style="text-align: right;">3.03</td>
+</tr>
+<tr class="even">
+<td>NJ</td>
+<td style="text-align: right;">20.44</td>
+<td style="text-align: right;">21.03</td>
+<td style="text-align: right;">4.61</td>
+<td style="text-align: right;">5.08</td>
+<td style="text-align: right;">3.35</td>
+<td style="text-align: right;">3.41</td>
+</tr>
+</tbody>
+</table>
+<p>These values line up closely with the paper’s descriptive message: Pennsylvania stores started with somewhat higher average employment, but New Jersey experienced a much larger rise in starting wages after the law change. That confirms the treatment was real and economically meaningful.</p>
+</section>
+<section id="replication-2-table-3-difference-in-differences" class="level2">
+<h2 class="anchored" data-anchor-id="replication-2-table-3-difference-in-differences">Replication 2: Table 3 Difference-in-Differences</h2>
+<p>The paper’s main result is in Table 3. The key comparison is the change in FTE employment in New Jersey relative to the change in Pennsylvania.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>State</th>
+<th style="text-align: right;">FTE Before</th>
+<th style="text-align: right;">FTE After</th>
+<th style="text-align: right;">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PA</td>
+<td style="text-align: right;">23.33</td>
+<td style="text-align: right;">21.17</td>
+<td style="text-align: right;">-2.28</td>
+</tr>
+<tr class="even">
+<td>NJ</td>
+<td style="text-align: right;">20.44</td>
+<td style="text-align: right;">21.03</td>
+<td style="text-align: right;">0.47</td>
+</tr>
+<tr class="odd">
+<td>NJ - PA</td>
+<td style="text-align: right;">-2.89</td>
+<td style="text-align: right;">-0.14</td>
+<td style="text-align: right;">2.75</td>
+</tr>
+</tbody>
+</table>
+<section id="interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
+<p>My replicated difference-in-differences estimate is about <strong>2.75 FTE employees</strong>, very close to the paper’s reported relative gain of <strong>2.76</strong>. That means employment in New Jersey increased relative to Pennsylvania after the minimum-wage hike, rather than falling.</p>
+<p>This is the central empirical surprise of the paper. A textbook competitive model would predict a negative effect. Card and Krueger instead find no evidence of employment loss in this setting.</p>
+<p>My replicated estimates closely match the published point estimates, so the core empirical conclusion is successfully reproduced.</p>
+</section>
+</section>
+<section id="replication-3-table-4-regression-results" class="level2">
+<h2 class="anchored" data-anchor-id="replication-3-table-4-regression-results">Replication 3: Table 4 Regression Results</h2>
+<p>The paper also estimates reduced-form regressions for the change in employment. I reproduce the core versions below using the same derived variables as the SAS check file.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th style="text-align: right;">Coefficient</th>
+<th style="text-align: right;">Standard Error</th>
+<th style="text-align: right;">N</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(i) <code>demp ~ nj</code></td>
+<td style="text-align: right;">2.71</td>
+<td style="text-align: right;">1.20</td>
+<td style="text-align: right;">375</td>
+</tr>
+<tr class="even">
+<td>(ii) <code>demp ~ nj + controls</code></td>
+<td style="text-align: right;">2.75</td>
+<td style="text-align: right;">1.20</td>
+<td style="text-align: right;">375</td>
+</tr>
+<tr class="odd">
+<td>(iii) <code>demp ~ gap</code></td>
+<td style="text-align: right;">16.14</td>
+<td style="text-align: right;">6.05</td>
+<td style="text-align: right;">360</td>
+</tr>
+<tr class="even">
+<td>(iv) <code>demp ~ gap + controls</code></td>
+<td style="text-align: right;">15.63</td>
+<td style="text-align: right;">6.16</td>
+<td style="text-align: right;">360</td>
+</tr>
+<tr class="odd">
+<td>(v) <code>demp ~ gap + region controls</code></td>
+<td style="text-align: right;">12.03</td>
+<td style="text-align: right;">7.39</td>
+<td style="text-align: right;">360</td>
+</tr>
+</tbody>
+</table>
+<section id="interpretation-1" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-1">Interpretation</h3>
+<p>These estimates closely track the paper’s Table 4:</p>
+<ul>
+<li>the New Jersey dummy specification gives a positive coefficient of about 2.7 to 2.8;</li>
+<li>the gap specification gives a positive coefficient around 15 to 16 in the simpler models;</li>
+<li>adding controls does not reverse the result.</li>
+</ul>
+<p>So the regression-adjusted version tells the same basic story as the raw difference-in-differences: I find no evidence that the employment effect is negative.</p>
+<p>My replicated estimates closely match the published point estimates, so the core empirical conclusion is successfully reproduced.</p>
+</section>
+</section>
+<section id="additional-analysis-naive-comparison-vs.-difference-in-differences" class="level2">
+<h2 class="anchored" data-anchor-id="additional-analysis-naive-comparison-vs.-difference-in-differences">Additional Analysis: Naive Comparison vs.&nbsp;Difference-in-Differences</h2>
+<p>For the extra piece, I compare a naive post-period cross-state comparison with the actual difference-in-differences estimate.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Estimate</th>
+<th style="text-align: right;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pre-period NJ - PA difference</td>
+<td style="text-align: right;">-2.89</td>
+</tr>
+<tr class="even">
+<td>Post-period NJ - PA difference</td>
+<td style="text-align: right;">-0.14</td>
+</tr>
+<tr class="odd">
+<td>Difference-in-differences</td>
+<td style="text-align: right;">2.75</td>
+</tr>
+</tbody>
+</table>
+<section id="why-this-matters" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-matters">Why this matters</h3>
+<p>A naive post-treatment comparison is not causal because New Jersey and Pennsylvania were already different before treatment. In the raw data, New Jersey stores started smaller on average. Difference-in-differences corrects for that baseline gap by comparing changes, not just levels.</p>
+<p>This comparison shows why a post-period cross-sectional gap is not a causal estimate: New Jersey stores already differed from Pennsylvania stores before the policy.</p>
+<p>That is exactly why this paper became such a famous applied example. Its result is not driven by a simple treated-versus-control comparison, but by a quasi-experimental before-after design with a nearby control group.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>This replication reproduces the main empirical result of Card and Krueger (1994): I find no evidence that New Jersey’s 1992 minimum-wage increase reduced fast-food employment relative to Pennsylvania. My replicated difference-in-differences estimate is very close to the published result, and the regression specifications tell the same story.</p>
+<p>The most important lesson is methodological as much as substantive. If I only looked at post-treatment differences, I would miss the causal logic. The value of the paper comes from the design: compare New Jersey to a plausible control group, compare before to after, and focus on the relative change.</p>
+<p>That is also why this paper fits so well into the broader causal inference framework from class. It is a clean, intuitive example of how a simple quasi-experimental design can overturn a strong theoretical prior.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Card, David, and Alan B. Krueger. 1994. “Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania.” <em>American Economic Review</em> 84 (4): 772–793.</p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-listing-date-sort="1776841200000" data-listing-file-modified-sort="1776902895600" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1013">
-<a href="./asmt/hw2-minimum-wage/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./asmt/hw2-minimum-wage/cover.png" class="thumbnail-image card-img" style="height: 220px;" alt="Minimum wage replication post cover">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Replicating Card &amp; Krueger (1994)
-</h5>
-<div class="card-text listing-description delink">
-<p>A concise replication of key difference-in-differences findings from Card and Krueger (1994).</p>
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Apr 22, 2026
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="1" data-listing-date-sort="1776063600000" data-listing-file-modified-sort="1776184062149" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3491">
-<a href="./asmt/hw1-ab-testing/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./asmt/hw1-ab-testing/cover.png" class="thumbnail-image card-img" style="height: 220px;" alt="A/B testing post cover">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-A/B Testing a Call to Action
-</h5>
-<div class="card-text listing-description delink">
-<p>A simulation-based walkthrough of frequentist inference through an A/B test of newsletter call-to-action language.</p>
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Apr 13, 2026
-</div>
-</div>
-</div>
-</div></a>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
-    // Ensure there is a toggle, if there isn't float one in the top right
-    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-      const a = window.document.createElement('a');
-      a.classList.add('top-right');
-      a.classList.add('quarto-color-scheme-toggle');
-      a.href = "";
-      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-      const i = window.document.createElement("i");
-      i.classList.add('bi');
-      a.appendChild(i);
-      window.document.body.appendChild(a);
-    }
-    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
