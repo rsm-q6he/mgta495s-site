@@ -13,3 +13,6 @@ _site/
 .devcontainer/
 /.quarto/
 **/*.quarto_ipynb
+
+# Data file
+asmt/hw3-blueprinty/data/

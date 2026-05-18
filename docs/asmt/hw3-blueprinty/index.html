@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.13">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Stan He">
+<meta name="dcterms.date" content="2026-05-17">
+
+<title>Poisson Regression and Maximum Likelihood Estimation – Stan H.</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ac077c1e730dfeb5e42400639d17284e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-ea00d30dd9b950c7ecb6e17bc6ca0835.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ac077c1e730dfeb5e42400639d17284e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9947125b96a39b6e338232ca4cef18ae.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-8cc648523f10c6643ad8b4804917a629.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-9947125b96a39b6e338232ca4cef18ae.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Stan H.</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../assignments.html"> 
+<span class="menu-text">Assignments</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rsm-q6he"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Poisson Regression and Maximum Likelihood Estimation</h1>
+<p class="subtitle lead">A Case Study of Blueprinty’s Software and Patent Awards</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Stan He </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 17, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="3135d2c0" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize, minimize_scalar</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> gammaln</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>BLUE <span class="op">=</span> <span class="st">"#6b9dc2"</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>RUST <span class="op">=</span> <span class="st">"#e07b54"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Blueprinty makes software that helps engineering firms prepare patent applications for the US Patent and Trademark Office. Its marketing team wants to claim that customers win more patents — a compelling pitch, but a non-trivial one to substantiate.</p>
+<p>The cleanest test would be a before-and-after study for each firm, but no such data exists. Instead, Blueprinty has collected a cross-section of 1,500 mature engineering firms, recording patent awards over the last five years alongside each firm’s region, age, and customer status. The complication is that customers are <strong>self-selected</strong>: firms that buy patent-application software likely differ from those that do not — in region, maturity, and sophistication — and those same differences independently predict patent success. A raw count comparison therefore conflates the software’s effect with pre-existing firm characteristics. The analysis below controls for age and region to isolate the association that remains.</p>
+</section>
+<section id="exploring-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-the-data">Exploring the Data</h2>
+<div id="adab53c4" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/blueprinty.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'customer_label'</span>] <span class="op">=</span> df[<span class="st">'iscustomer'</span>].<span class="bu">map</span>({<span class="dv">0</span>: <span class="st">'Non-Customer'</span>, <span class="dv">1</span>: <span class="st">'Customer'</span>})</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>mean_patents <span class="op">=</span> df.groupby(<span class="st">'customer_label'</span>)[<span class="st">'patents'</span>].mean()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>mean_age     <span class="op">=</span> df.groupby(<span class="st">'customer_label'</span>)[<span class="st">'age'</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="patent-counts-by-customer-status" class="level3">
+<h3 class="anchored" data-anchor-id="patent-counts-by-customer-status">Patent Counts by Customer Status</h3>
+<div id="c4e95ea2" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">4</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x_min, x_max <span class="op">=</span> df[<span class="st">'patents'</span>].<span class="bu">min</span>() <span class="op">-</span> <span class="fl">0.5</span>, df[<span class="st">'patents'</span>].<span class="bu">max</span>() <span class="op">+</span> <span class="fl">0.5</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (label, color) <span class="kw">in</span> <span class="bu">zip</span>(axes, [(<span class="st">'Non-Customer'</span>, BLUE), (<span class="st">'Customer'</span>, RUST)]):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> df[df[<span class="st">'customer_label'</span>] <span class="op">==</span> label]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    sns.histplot(sub[<span class="st">'patents'</span>], ax<span class="op">=</span>ax, color<span class="op">=</span>color,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                 bins<span class="op">=</span><span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">18</span>), edgecolor<span class="op">=</span><span class="st">'white'</span>, alpha<span class="op">=</span><span class="fl">0.85</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(x_min, x_max)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">  (mean = </span><span class="sc">{</span>mean_patents[label]<span class="sc">:.2f}</span><span class="ss">)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Patents (last 5 years)"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Number of firms"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    ax.grid(<span class="va">False</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    sns.despine(ax<span class="op">=</span>ax)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Patent Count Distribution by Customer Status"</span>, fontsize<span class="op">=</span><span class="dv">14</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-4-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="1041" height="393"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Customers average 4.13 patents over five years versus 3.47 for non-customers — a gap of 0.66. Both distributions are right-skewed and concentrated in the 1–6 range, but the customer distribution is visibly shifted right. Whether this gap reflects the software or the type of firm that selects into it is the central question of this analysis.</p>
+</section>
+<section id="regional-composition-by-customer-status" class="level3">
+<h3 class="anchored" data-anchor-id="regional-composition-by-customer-status">Regional Composition by Customer Status</h3>
+<div id="36f8b007" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute customer share per region</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rc <span class="op">=</span> df.groupby([<span class="st">'region'</span>, <span class="st">'customer_label'</span>]).size().unstack(fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>rc_pct <span class="op">=</span> rc.div(rc.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>), axis<span class="op">=</span><span class="dv">0</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort so Northeast appears at the bottom (most striking contrast last)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>rc_pct <span class="op">=</span> rc_pct.sort_values(<span class="st">'Customer'</span>, ascending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">4</span>))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>rc_pct.plot(kind<span class="op">=</span><span class="st">'barh'</span>, stacked<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span>[BLUE, RUST],</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            edgecolor<span class="op">=</span><span class="st">'white'</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            ax<span class="op">=</span>ax)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Share of firms in the region"</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">""</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Customer Share by Region"</span>, fontsize<span class="op">=</span><span class="dv">13</span>, loc<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(plt.FuncFormatter(<span class="kw">lambda</span> x, _: <span class="ss">f'</span><span class="sc">{</span><span class="bu">int</span>(x)<span class="sc">}</span><span class="ss">%'</span>))</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>ax.legend([<span class="st">'Non-Customer'</span>, <span class="st">'Customer'</span>], loc<span class="op">=</span><span class="st">'lower right'</span>, framealpha<span class="op">=</span><span class="fl">0.9</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">False</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>sns.despine(ax<span class="op">=</span>ax)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="849" height="368"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="607baacc" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rc <span class="op">=</span> df.groupby([<span class="st">'region'</span>, <span class="st">'customer_label'</span>]).size().unstack(fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>rc[<span class="st">'Customer %'</span>] <span class="op">=</span> (rc[<span class="st">'Customer'</span>] <span class="op">/</span> rc.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>rc.index.name <span class="op">=</span> <span class="st">'Region'</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>display(rc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">customer_label</th>
+<th data-quarto-table-cell-role="th">Customer</th>
+<th data-quarto-table-cell-role="th">Non-Customer</th>
+<th data-quarto-table-cell-role="th">Customer %</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Region</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Midwest</th>
+<td>37</td>
+<td>187</td>
+<td>16.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Northeast</th>
+<td>328</td>
+<td>273</td>
+<td>54.6</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Northwest</th>
+<td>29</td>
+<td>158</td>
+<td>15.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">South</th>
+<td>35</td>
+<td>156</td>
+<td>18.3</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Southwest</th>
+<td>52</td>
+<td>245</td>
+<td>17.5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The Northeast is an outlier: over half its firms (54.6%) are Blueprinty customers, while every other region sits between 15–18%. Since regions differ in their baseline patent activity — driven by industry mix, research institutions, and local patent culture — this geographic concentration creates a confound. A naïve comparison would partly pick up a <em>Northeast effect</em> masquerading as a software effect.</p>
+</section>
+<section id="firm-age-by-customer-status" class="level3">
+<h3 class="anchored" data-anchor-id="firm-age-by-customer-status">Firm Age by Customer Status</h3>
+<div id="af45bb27" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> label, color <span class="kw">in</span> [(<span class="st">'Non-Customer'</span>, BLUE), (<span class="st">'Customer'</span>, RUST)]:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> df[df[<span class="st">'customer_label'</span>] <span class="op">==</span> label]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    sns.histplot(sub[<span class="st">'age'</span>], ax<span class="op">=</span>ax, color<span class="op">=</span>color, label<span class="op">=</span>label,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                 bins<span class="op">=</span><span class="dv">30</span>, edgecolor<span class="op">=</span><span class="st">'white'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Age Distribution by Customer Status"</span>, fontsize<span class="op">=</span><span class="dv">13</span>, loc<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Firm age (years)"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Number of firms"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>ax.legend(title<span class="op">=</span><span class="st">"Status"</span>, loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">False</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>sns.despine(ax<span class="op">=</span>ax)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-7-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="945" height="368"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Customers and non-customers have nearly identical mean ages (26.9 vs 26.1 years), but the distributions diverge at the tails. More importantly, firm age is itself a strong predictor of patent counts — older firms have had more time to build pipelines and institutional expertise — so even subtle age imbalances between groups can bias a naïve comparison. The regression below accounts for this explicitly.</p>
+</section>
+</section>
+<section id="a-simple-poisson-model-via-maximum-likelihood" class="level2">
+<h2 class="anchored" data-anchor-id="a-simple-poisson-model-via-maximum-likelihood">A Simple Poisson Model via Maximum Likelihood</h2>
+<section id="why-poisson" class="level3">
+<h3 class="anchored" data-anchor-id="why-poisson">Why Poisson?</h3>
+<p>Patent counts are non-negative integers. The Normal distribution is a poor fit: it places positive probability on negative and fractional values and is symmetric, whereas count data tend to be right-skewed. The <strong>Poisson distribution</strong> is the natural starting point, assigning probability</p>
+<p><span class="math display">\[f(Y \mid \lambda) = \frac{e^{-\lambda}\lambda^{Y}}{Y!}, \qquad Y = 0,\, 1,\, 2,\, \ldots\]</span></p>
+<p>where <span class="math inline">\(\lambda &gt; 0\)</span> governs both the mean and the variance of the distribution.</p>
+</section>
+<section id="log-likelihood-derivation" class="level3">
+<h3 class="anchored" data-anchor-id="log-likelihood-derivation">Log-Likelihood Derivation</h3>
+<p>For <span class="math inline">\(n\)</span> iid observations <span class="math inline">\(Y_1,\ldots,Y_n \sim \text{Poisson}(\lambda)\)</span>, the joint likelihood is:</p>
+<p><span class="math display">\[L_n(\lambda) = \prod_{i=1}^{n} \frac{e^{-\lambda}\lambda^{Y_i}}{Y_i!}
+= e^{-n\lambda}\,\lambda^{\sum_i Y_i}\prod_{i=1}^n \frac{1}{Y_i!}\]</span></p>
+<p>Taking logarithms yields the log-likelihood:</p>
+<p><span class="math display">\[\ell_n(\lambda) = -n\lambda + \Bigl(\sum_{i=1}^n Y_i\Bigr)\log\lambda - \sum_{i=1}^n \log(Y_i!)\]</span></p>
+</section>
+<section id="coding-the-log-likelihood" class="level3">
+<h3 class="anchored" data-anchor-id="coding-the-log-likelihood">Coding the Log-Likelihood</h3>
+<div id="9e817fb7" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_loglikelihood(lam, Y):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Log-likelihood for an iid sample Y ~ Poisson(lambda)."""</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>(<span class="op">-</span>lam <span class="op">+</span> Y <span class="op">*</span> np.log(lam) <span class="op">-</span> gammaln(Y <span class="op">+</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="plotting-the-log-likelihood" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-the-log-likelihood">Plotting the Log-Likelihood</h3>
+<div id="4fc7dc5f" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Y       <span class="op">=</span> df[<span class="st">'patents'</span>].values</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lambdas <span class="op">=</span> np.linspace(<span class="fl">0.5</span>, <span class="dv">8</span>, <span class="dv">500</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ll_vals <span class="op">=</span> [poisson_loglikelihood(l, Y) <span class="cf">for</span> l <span class="kw">in</span> lambdas]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>ax.plot(lambdas, ll_vals, color<span class="op">=</span>BLUE, linewidth<span class="op">=</span><span class="fl">2.2</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>ax.axvline(Y.mean(), color<span class="op">=</span>RUST, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="fl">1.8</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>           label<span class="op">=</span><span class="vs">fr'</span><span class="dv">$\b</span><span class="vs">ar</span><span class="ch">{{</span><span class="vs">Y</span><span class="ch">}}</span><span class="dv">$</span><span class="vs"> = </span><span class="sc">{</span>Y<span class="sc">.</span>mean()<span class="sc">:.3f}</span><span class="vs">'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r'</span><span class="dv">$</span><span class="er">\</span><span class="vs">lambda</span><span class="dv">$</span><span class="vs">'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r'</span><span class="dv">$</span><span class="er">\</span><span class="vs">ell_n</span><span class="kw">(</span><span class="er">\</span><span class="vs">lambda</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="vs">r'Poisson Log-Likelihood as a Function of </span><span class="dv">$</span><span class="er">\</span><span class="vs">lambda</span><span class="dv">$</span><span class="vs">'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">False</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>sns.despine(ax<span class="op">=</span>ax)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-9-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="750" height="365"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The curve is concave with a single peak. The MLE can be read directly off the plot: find the <span class="math inline">\(\lambda\)</span> on the horizontal axis below the maximum, which coincides with the sample mean (dashed line).</p>
+</section>
+<section id="analytical-mle" class="level3">
+<h3 class="anchored" data-anchor-id="analytical-mle">Analytical MLE</h3>
+<p>Differentiating and setting equal to zero:</p>
+<p><span class="math display">\[\frac{d\ell_n}{d\lambda} = -n + \frac{1}{\lambda}\sum_{i=1}^{n} Y_i = 0
+\quad\Longrightarrow\quad
+\hat{\lambda}_{\text{MLE}} = \bar{Y}\]</span></p>
+<p>Since <span class="math inline">\(\mathbb{E}[Y] = \lambda\)</span> under the Poisson model, estimating <span class="math inline">\(\lambda\)</span> by the sample mean is both the MLE and the intuitively natural choice.</p>
+</section>
+<section id="numerical-confirmation" class="level3">
+<h3 class="anchored" data-anchor-id="numerical-confirmation">Numerical Confirmation</h3>
+<div id="96a182cf" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>result_simple <span class="op">=</span> minimize_scalar(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    fun    <span class="op">=</span> <span class="kw">lambda</span> l: <span class="op">-</span>poisson_loglikelihood(l, Y),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    bounds <span class="op">=</span> (<span class="fl">0.01</span>, <span class="dv">20</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    method <span class="op">=</span> <span class="st">'bounded'</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Numerical MLE:  λ̂ = </span><span class="sc">{</span>result_simple<span class="sc">.</span>x<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample mean:    Ȳ  = </span><span class="sc">{</span>Y<span class="sc">.</span>mean()<span class="sc">:.6f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Numerical MLE:  λ̂ = 3.684667
+Sample mean:    Ȳ  = 3.684667</code></pre>
+</div>
+</div>
+<p>The optimizer returns a value numerically identical to <span class="math inline">\(\bar{Y}\)</span>, confirming the closed-form derivation. Any residual discrepancy is a product of the optimizer’s step-size tolerance, not any mathematical difference.</p>
+</section>
+</section>
+<section id="poisson-regression" class="level2">
+<h2 class="anchored" data-anchor-id="poisson-regression">Poisson Regression</h2>
+<section id="model-setup" class="level3">
+<h3 class="anchored" data-anchor-id="model-setup">Model Setup</h3>
+<p>A single shared <span class="math inline">\(\lambda\)</span> is too coarse: a 40-year-old Northeast firm and a 15-year-old Midwest firm should have different expected patent rates. <strong>Poisson regression</strong> lets the rate vary across firms as a function of their characteristics:</p>
+<p><span class="math display">\[Y_i \sim \text{Poisson}(\lambda_i), \qquad \lambda_i = \exp(X_i'\beta)\]</span></p>
+<p>The exponential link is critical: <span class="math inline">\(X_i'\beta\)</span> is unbounded, but <span class="math inline">\(\lambda_i\)</span> must be strictly positive. Exponentiation maps <span class="math inline">\(\mathbb{R} \to (0,\infty)\)</span>, enforcing positivity without constraints. The log-likelihood becomes:</p>
+<p><span class="math display">\[\ell_n(\beta) = \sum_{i=1}^{n}\Bigl[-\exp(X_i'\beta) + Y_i(X_i'\beta) - \log(Y_i!)\Bigr]\]</span></p>
+</section>
+<section id="log-likelihood-function" class="level3">
+<h3 class="anchored" data-anchor-id="log-likelihood-function">Log-Likelihood Function</h3>
+<div id="f74a4ebf" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_regression_loglikelihood(beta, Y, X):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Log-likelihood for Poisson regression: Y_i ~ Poisson(exp(X_i @ beta))."""</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    xb <span class="op">=</span> X <span class="op">@</span> beta</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>(<span class="op">-</span>np.exp(xb) <span class="op">+</span> Y <span class="op">*</span> xb <span class="op">-</span> gammaln(Y <span class="op">+</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="design-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="design-matrix">Design Matrix</h3>
+<div id="c7c7ed17" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Northeast is the reference region</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>regions_to_include <span class="op">=</span> [<span class="st">'Midwest'</span>, <span class="st">'Northwest'</span>, <span class="st">'South'</span>, <span class="st">'Southwest'</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>X_df <span class="op">=</span> pd.DataFrame({<span class="st">'intercept'</span>: <span class="fl">1.0</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                      <span class="st">'age'</span>:       df[<span class="st">'age'</span>],</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                      <span class="st">'age_sq'</span>:    df[<span class="st">'age'</span>] <span class="op">**</span> <span class="dv">2</span>})</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r <span class="kw">in</span> regions_to_include:</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    X_df[r] <span class="op">=</span> (df[<span class="st">'region'</span>] <span class="op">==</span> r).astype(<span class="bu">float</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>X_df[<span class="st">'iscustomer'</span>] <span class="op">=</span> df[<span class="st">'iscustomer'</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>X         <span class="op">=</span> X_df.values</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>col_names <span class="op">=</span> X_df.columns.tolist()</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Columns:"</span>, col_names)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Shape:  "</span>, X.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Columns: ['intercept', 'age', 'age_sq', 'Midwest', 'Northwest', 'South', 'Southwest', 'iscustomer']
+Shape:   (1500, 8)</code></pre>
+</div>
+</div>
+<p><strong>Age squared</strong> is included alongside age because the patent–age relationship is likely hump-shaped: firms may ramp up patenting as they mature and accumulate expertise, then slow as their core innovations are already protected. A quadratic term captures this non-linearity without imposing a rigid functional form. <strong>One region is dropped</strong> (Northeast) because including all five dummies alongside an intercept would introduce perfect collinearity — the five indicators sum to 1 for every observation, exactly replicating the intercept column. All region coefficients are interpreted relative to this Northeast baseline.</p>
+</section>
+<section id="maximum-likelihood-estimation" class="level3">
+<h3 class="anchored" data-anchor-id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h3>
+<div id="2b705fa3" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>beta0    <span class="op">=</span> np.zeros(<span class="bu">len</span>(col_names))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>beta0[<span class="dv">0</span>] <span class="op">=</span> np.log(Y.mean())          <span class="co"># warm-start intercept</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>result   <span class="op">=</span> minimize(<span class="kw">lambda</span> b: <span class="op">-</span>poisson_regression_loglikelihood(b, Y, X),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                    beta0, method<span class="op">=</span><span class="st">'BFGS'</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>beta_hat <span class="op">=</span> result.x</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>se_hat   <span class="op">=</span> np.sqrt(np.diag(result.hess_inv))</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Coefficient'</span>: beta_hat,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Std Error'</span>:   se_hat,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'z-value'</span>:     beta_hat <span class="op">/</span> se_hat,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>}, index<span class="op">=</span>col_names).<span class="bu">round</span>(<span class="dv">4</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>display(results_df.style</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>        .<span class="bu">format</span>({<span class="st">'Coefficient'</span>: <span class="st">'</span><span class="sc">{:.4f}</span><span class="st">'</span>, <span class="st">'Std Error'</span>: <span class="st">'</span><span class="sc">{:.4f}</span><span class="st">'</span>, <span class="st">'z-value'</span>: <span class="st">'</span><span class="sc">{:.3f}</span><span class="st">'</span>})</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>        .set_caption(<span class="st">"Table 1. MLE Estimates — Poisson Regression (BFGS)"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<style type="text/css">
+</style>
+
+<div id="T_c9759" class="quarto-float quarto-figure quarto-figure-center anchored" data-quarto-postprocess="true">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="T_c9759-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Table 1. MLE Estimates — Poisson Regression (BFGS)
+</figcaption>
+<div aria-describedby="T_c9759-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="T_c9759" class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
+<th id="T_c9759_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Coefficient</th>
+<th id="T_c9759_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Std Error</th>
+<th id="T_c9759_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">z-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th id="T_c9759_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">intercept</th>
+<td id="T_c9759_row0_col0" class="data row0 col0">-0.4808</td>
+<td id="T_c9759_row0_col1" class="data row0 col1">0.1832</td>
+<td id="T_c9759_row0_col2" class="data row0 col2">-2.624</td>
+</tr>
+<tr class="even">
+<th id="T_c9759_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">age</th>
+<td id="T_c9759_row1_col0" class="data row1 col0">0.1487</td>
+<td id="T_c9759_row1_col1" class="data row1 col1">0.0138</td>
+<td id="T_c9759_row1_col2" class="data row1 col2">10.744</td>
+</tr>
+<tr class="odd">
+<th id="T_c9759_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">age_sq</th>
+<td id="T_c9759_row2_col0" class="data row2 col0">-0.0030</td>
+<td id="T_c9759_row2_col1" class="data row2 col1">0.0003</td>
+<td id="T_c9759_row2_col2" class="data row2 col2">-11.535</td>
+</tr>
+<tr class="even">
+<th id="T_c9759_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">Midwest</th>
+<td id="T_c9759_row3_col0" class="data row3 col0">-0.0291</td>
+<td id="T_c9759_row3_col1" class="data row3 col1">0.0444</td>
+<td id="T_c9759_row3_col2" class="data row3 col2">-0.657</td>
+</tr>
+<tr class="odd">
+<th id="T_c9759_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">Northwest</th>
+<td id="T_c9759_row4_col0" class="data row4 col0">-0.0468</td>
+<td id="T_c9759_row4_col1" class="data row4 col1">0.0459</td>
+<td id="T_c9759_row4_col2" class="data row4 col2">-1.018</td>
+</tr>
+<tr class="even">
+<th id="T_c9759_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">South</th>
+<td id="T_c9759_row5_col0" class="data row5 col0">0.0274</td>
+<td id="T_c9759_row5_col1" class="data row5 col1">0.0461</td>
+<td id="T_c9759_row5_col2" class="data row5 col2">0.595</td>
+</tr>
+<tr class="odd">
+<th id="T_c9759_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">Southwest</th>
+<td id="T_c9759_row6_col0" class="data row6 col0">0.0214</td>
+<td id="T_c9759_row6_col1" class="data row6 col1">0.0387</td>
+<td id="T_c9759_row6_col2" class="data row6 col2">0.554</td>
+</tr>
+<tr class="even">
+<th id="T_c9759_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">iscustomer</th>
+<td id="T_c9759_row7_col0" class="data row7 col0">0.2076</td>
+<td id="T_c9759_row7_col1" class="data row7 col1">0.0315</td>
+<td id="T_c9759_row7_col2" class="data row7 col2">6.601</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="validation-with-statsmodels" class="level3">
+<h3 class="anchored" data-anchor-id="validation-with-statsmodels">Validation with <code>statsmodels</code></h3>
+<div id="7215568d" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>glm_mod <span class="op">=</span> sm.GLM(Y, X, family<span class="op">=</span>sm.families.Poisson()).fit()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>glm_df <span class="op">=</span> pd.DataFrame({<span class="st">'GLM Coef'</span>: glm_mod.params,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'GLM SE'</span>:   glm_mod.bse},</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                       index<span class="op">=</span>col_names).<span class="bu">round</span>(<span class="dv">4</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>display(glm_df.style</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        .<span class="bu">format</span>({<span class="st">'GLM Coef'</span>: <span class="st">'</span><span class="sc">{:.4f}</span><span class="st">'</span>, <span class="st">'GLM SE'</span>: <span class="st">'</span><span class="sc">{:.4f}</span><span class="st">'</span>})</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        .set_caption(<span class="st">"Table 2. GLM Estimates for Comparison"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<style type="text/css">
+</style>
+
+<div id="T_4e943" class="quarto-float quarto-figure quarto-figure-center anchored" data-quarto-postprocess="true">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="T_4e943-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Table 2. GLM Estimates for Comparison
+</figcaption>
+<div aria-describedby="T_4e943-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="T_4e943" class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
+<th id="T_4e943_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">GLM Coef</th>
+<th id="T_4e943_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">GLM SE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th id="T_4e943_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">intercept</th>
+<td id="T_4e943_row0_col0" class="data row0 col0">-0.4797</td>
+<td id="T_4e943_row0_col1" class="data row0 col1">0.1832</td>
+</tr>
+<tr class="even">
+<th id="T_4e943_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">age</th>
+<td id="T_4e943_row1_col0" class="data row1 col0">0.1486</td>
+<td id="T_4e943_row1_col1" class="data row1 col1">0.0139</td>
+</tr>
+<tr class="odd">
+<th id="T_4e943_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">age_sq</th>
+<td id="T_4e943_row2_col0" class="data row2 col0">-0.0030</td>
+<td id="T_4e943_row2_col1" class="data row2 col1">0.0003</td>
+</tr>
+<tr class="even">
+<th id="T_4e943_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">Midwest</th>
+<td id="T_4e943_row3_col0" class="data row3 col0">-0.0292</td>
+<td id="T_4e943_row3_col1" class="data row3 col1">0.0436</td>
+</tr>
+<tr class="odd">
+<th id="T_4e943_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">Northwest</th>
+<td id="T_4e943_row4_col0" class="data row4 col0">-0.0467</td>
+<td id="T_4e943_row4_col1" class="data row4 col1">0.0466</td>
+</tr>
+<tr class="even">
+<th id="T_4e943_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">South</th>
+<td id="T_4e943_row5_col0" class="data row5 col0">0.0274</td>
+<td id="T_4e943_row5_col1" class="data row5 col1">0.0451</td>
+</tr>
+<tr class="odd">
+<th id="T_4e943_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">Southwest</th>
+<td id="T_4e943_row6_col0" class="data row6 col0">0.0214</td>
+<td id="T_4e943_row6_col1" class="data row6 col1">0.0385</td>
+</tr>
+<tr class="even">
+<th id="T_4e943_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">iscustomer</th>
+<td id="T_4e943_row7_col0" class="data row7 col0">0.2076</td>
+<td id="T_4e943_row7_col1" class="data row7 col1">0.0309</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>The <code>statsmodels</code> GLM coefficients match our hand-coded estimates to four decimal places. Standard errors are close but not identical: <code>statsmodels</code> derives them from the exact observed Fisher information evaluated at the MLE, while BFGS accumulates an approximate inverse Hessian over the optimization path. The GLM standard errors are generally preferred; the BFGS approximation is a convenient shortcut that performs well in practice.</p>
+</section>
+<section id="interpreting-the-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="interpreting-the-coefficients">Interpreting the Coefficients</h3>
+<p>In a Poisson regression, coefficients enter multiplicatively: a coefficient <span class="math inline">\(\hat\beta_k\)</span> implies that a one-unit increase in <span class="math inline">\(X_k\)</span> <em>multiplies</em> <span class="math inline">\(\lambda_i\)</span> by <span class="math inline">\(\exp(\hat\beta_k)\)</span>, all else held constant.</p>
+<ul>
+<li><p><strong><code>iscustomer</code></strong> (0.2076): The key coefficient. Being a Blueprinty customer is associated with <span class="math inline">\(\exp(0\.2076) \approx\)</span> 1.231 — a <strong>23% increase</strong> in expected patents after controlling for age and region. The z-value of 6.60 indicates this estimate is statistically well-separated from zero.</p></li>
+<li><p><strong><code>age</code> and <code>age_sq</code></strong>: A positive linear and negative quadratic coefficient traces an inverted-U relationship — patent activity rises with firm maturity then tapers for the oldest firms, consistent with diminishing innovation returns late in a corporate lifecycle.</p></li>
+<li><p><strong>Regional dummies</strong>: Midwest, Northwest, South, and Southwest all carry small negative-to-zero coefficients relative to the Northeast, confirming the Northeast as the most patent-active region in the sample even after conditioning on age and customer status.</p></li>
+</ul>
+</section>
+</section>
+<section id="the-effect-of-blueprintys-software" class="level2">
+<h2 class="anchored" data-anchor-id="the-effect-of-blueprintys-software">The Effect of Blueprinty’s Software</h2>
+<section id="counterfactual-simulation" class="level3">
+<h3 class="anchored" data-anchor-id="counterfactual-simulation">Counterfactual Simulation</h3>
+<p>Because the model is multiplicative, the <code>iscustomer</code> coefficient cannot be read directly as additional patents. A more interpretable estimate comes from a <strong>counterfactual simulation</strong>: predict each firm’s expected patent count twice — once with every firm’s customer status set to 0, and once with it set to 1 — while holding all other characteristics (age, region) at their observed values. The average difference is the estimated effect of Blueprinty’s software.</p>
+<div id="c01d359b" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cust_col <span class="op">=</span> col_names.index(<span class="st">'iscustomer'</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>X0 <span class="op">=</span> X.copy()<span class="op">;</span> X0[:, cust_col] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>X1 <span class="op">=</span> X.copy()<span class="op">;</span> X1[:, cust_col] <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>y0_hat     <span class="op">=</span> np.exp(X0 <span class="op">@</span> beta_hat)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>y1_hat     <span class="op">=</span> np.exp(X1 <span class="op">@</span> beta_hat)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>avg_effect <span class="op">=</span> (y1_hat <span class="op">-</span> y0_hat).mean()</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Avg predicted patents — non-customer:   </span><span class="sc">{</span>y0_hat<span class="sc">.</span>mean()<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Avg predicted patents — customer:       </span><span class="sc">{</span>y1_hat<span class="sc">.</span>mean()<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Estimated average effect of Blueprinty: +</span><span class="sc">{</span>avg_effect<span class="sc">:.4f}</span><span class="ss"> patents"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Avg predicted patents — non-customer:   3.4362
+Avg predicted patents — customer:       4.2291
+Estimated average effect of Blueprinty: +0.7929 patents</code></pre>
+</div>
+</div>
+<div id="a108ef60" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(y1_hat <span class="op">-</span> y0_hat, bins<span class="op">=</span><span class="dv">40</span>, color<span class="op">=</span>BLUE,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>             edgecolor<span class="op">=</span><span class="st">'white'</span>, alpha<span class="op">=</span><span class="fl">0.85</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>ax.axvline(avg_effect, color<span class="op">=</span>RUST, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="fl">1.8</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>           label<span class="op">=</span><span class="ss">f'Average effect = </span><span class="sc">{</span>avg_effect<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">hat{y}_1 - </span><span class="er">\</span><span class="vs">hat{y}_0</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">additional patents per firm</span><span class="kw">)</span><span class="vs">"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Number of firms"</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Firm-Level Counterfactual Effect of Blueprinty Software"</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">False</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>sns.despine(ax<span class="op">=</span>ax)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-16-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="753" height="366"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<p>Holding firm age and region fixed at each firm’s observed values, adopting Blueprinty is associated with approximately <strong>0.79 additional patents</strong> over five years — a 23% gain above the counterfactual baseline of 3.44 patents. The distribution of firm-level differences is tightly clustered because the <code>iscustomer</code> coefficient applies a uniform multiplicative shift; the spread reflects variation in age- and region-driven baselines across firms.</p>
+<p>The result supports Blueprinty’s marketing claim, but two caveats matter. First, this is an <strong>observational study</strong>: firms self-selected into the customer base, and unobserved characteristics — R&amp;D investment, quality of patent counsel, technological complexity — may drive part of the remaining association. A randomised experiment or a credible quasi-experimental design would be required to make a causal claim. Second, Poisson regression assumes equidispersion (mean equals variance), which patent counts often violate; a Negative Binomial model or robust standard errors would be natural robustness checks. Subject to these limitations, the controlled analysis provides meaningful evidence consistent with Blueprinty’s claim that its software helps firms file more successful patent applications.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

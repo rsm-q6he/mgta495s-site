@@ -199,6 +199,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Did New Jersey’s 1992 minimum-wage increase reduce fast-food employment relative to a comparable control group?</p>
 </blockquote>
 <p>The treatment group is fast-food restaurants in New Jersey. The control group is fast-food restaurants in eastern Pennsylvania. The main outcome is full-time-equivalent employment (FTE) per store.</p>
+<p>The key identifying assumption is <strong>parallel trends</strong>: absent the New Jersey wage increase, employment in NJ and PA would have changed at the same rate over the same period. If NJ stores were already trending differently for unrelated reasons — say, a regional economic shock — the DiD estimate would conflate the policy effect with that pre-existing divergence. The paper cannot test this directly (the counterfactual is unobserved), but the plausibility of the assumption is what makes eastern Pennsylvania a credible control: it is geographically adjacent and shares the same fast-food chains and labor market conditions.</p>
 </section>
 <section id="data-and-setup" class="level2">
 <h2 class="anchored" data-anchor-id="data-and-setup">Data and Setup</h2>
@@ -289,6 +290,20 @@ ul.task-list li input[type="checkbox"] {
 <p>My replicated difference-in-differences estimate is about <strong>2.75 FTE employees</strong>, very close to the paper’s reported relative gain of <strong>2.76</strong>. That means employment in New Jersey increased relative to Pennsylvania after the minimum-wage hike, rather than falling.</p>
 <p>This is the central empirical surprise of the paper. A textbook competitive model would predict a negative effect. Card and Krueger instead find no evidence of employment loss in this setting.</p>
 <p>My replicated estimates closely match the published point estimates, so the core empirical conclusion is successfully reproduced.</p>
+<div id="cell-fig-did" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div id="fig-did" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-did-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-did-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-did-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: FTE employment per store before and after New Jersey’s April 1992 minimum-wage increase. The dashed line is the NJ counterfactual — NJ’s predicted trajectory had it followed Pennsylvania’s trend. The DiD estimate is the gap between the dashed and solid NJ lines at Wave 2.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="replication-3-table-4-regression-results" class="level2">
