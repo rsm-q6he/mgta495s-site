@@ -1,0 +1,44 @@
+<svg width="680" height="310" viewBox="0 0 680 310" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>HW3: Poisson Regression and MLE — Blueprinty Patent Awards</title>
+<desc>Cover image with a Poisson PMF bar chart for λ=3.68 and a smooth likelihood curve overlay</desc>
+<style>
+.ct{font:500 24px/1 system-ui,sans-serif;fill:#2b3044}
+.cs{font:400 13px/1 system-ui,sans-serif;fill:#6b7190}
+.cc{font:400 11px/1 system-ui,sans-serif;fill:#a0a8c0}
+.ca{font:400 11px/1 system-ui,sans-serif;fill:#b0b8cc;text-anchor:middle}
+.lan{font:400 11px/1 system-ui,sans-serif;fill:#e07b54;text-anchor:middle}
+</style>
+<rect width="680" height="310" fill="#f8f6f1"/>
+<rect x="40" y="28" width="3" height="66" fill="#6b9dc2" rx="1"/>
+<text x="52" y="55" class="ct">Poisson Regression &amp; MLE</text>
+<text x="52" y="77" class="cs">Blueprinty Software · Patent Awards Case Study</text>
+<text x="52" y="96" class="cc">MGTA 495 · UCSD Rady · Spring 2026</text>
+<line x1="40" y1="112" x2="640" y2="112" stroke="#e2ddd5" stroke-width="0.5"/>
+<rect x="48"  y="253" width="38" height="17"  fill="#6b9dc2" rx="2" opacity="0.55"/>
+<rect x="102" y="208" width="38" height="62"  fill="#6b9dc2" rx="2" opacity="0.65"/>
+<rect x="156" y="156" width="38" height="114" fill="#6b9dc2" rx="2" opacity="0.78"/>
+<rect x="210" y="130" width="38" height="140" fill="#6b9dc2" rx="2" opacity="1"/>
+<rect x="264" y="141" width="38" height="129" fill="#6b9dc2" rx="2" opacity="0.93"/>
+<rect x="318" y="175" width="38" height="95"  fill="#6b9dc2" rx="2" opacity="0.83"/>
+<rect x="372" y="212" width="38" height="58"  fill="#6b9dc2" rx="2" opacity="0.72"/>
+<rect x="426" y="239" width="38" height="31"  fill="#6b9dc2" rx="2" opacity="0.63"/>
+<rect x="480" y="256" width="38" height="14"  fill="#6b9dc2" rx="2" opacity="0.55"/>
+<rect x="534" y="264" width="38" height="6"   fill="#6b9dc2" rx="2" opacity="0.48"/>
+<rect x="588" y="268" width="38" height="2"   fill="#6b9dc2" rx="2" opacity="0.42"/>
+<line x1="40" y1="270" x2="640" y2="270" stroke="#ccc8be" stroke-width="0.8"/>
+<text x="67"  y="283" class="ca">0</text>
+<text x="121" y="283" class="ca">1</text>
+<text x="175" y="283" class="ca">2</text>
+<text x="229" y="283" class="ca">3</text>
+<text x="283" y="283" class="ca">4</text>
+<text x="337" y="283" class="ca">5</text>
+<text x="391" y="283" class="ca">6</text>
+<text x="445" y="283" class="ca">7</text>
+<text x="499" y="283" class="ca">8</text>
+<text x="553" y="283" class="ca">9</text>
+<text x="607" y="283" class="ca">10</text>
+<text x="340" y="300" class="ca" style="font-size:11px">Number of patents awarded, k</text>
+<path d="M 0 270 C 11 267 47 263 67 253 C 87 243 103 224 121 208 C 139 192 157 169 175 156 C 193 143 211 133 229 130 C 247 128 265 134 283 141 C 301 149 319 163 337 175 C 355 187 373 201 391 212 C 409 223 427 232 445 239 C 463 246 481 252 499 256 C 517 260 535 262 553 264 C 571 266 586 267 607 268 C 628 269 668 270 680 270" fill="none" stroke="#e07b54" stroke-width="2" opacity="0.88"/>
+<text x="229" y="121" class="lan">λ̂ = 3.68</text>
+<line x1="229" y1="125" x2="229" y2="130" stroke="#e07b54" stroke-width="1" stroke-dasharray="2,1.5"/>
+</svg>
