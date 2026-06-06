@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.13">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Stan He">
+<meta name="dcterms.date" content="2026-06-06">
+
+<title>Key Drivers Analysis – Stan H.</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ac077c1e730dfeb5e42400639d17284e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9947125b96a39b6e338232ca4cef18ae.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Stan H.</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../assignments.html"> 
+<span class="menu-text">Assignments</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rsm-q6he"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#data-snapshot" id="toc-data-snapshot" class="nav-link" data-scroll-target="#data-snapshot">Data Snapshot</a></li>
+  <li><a href="#importance-metrics" id="toc-importance-metrics" class="nav-link" data-scroll-target="#importance-metrics">Importance Metrics</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#methodological-notes" id="toc-methodological-notes" class="nav-link" data-scroll-target="#methodological-notes">Methodological Notes</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Key Drivers Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Stan He </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 6, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Which product attributes actually <em>move</em> customer satisfaction? Simple correlations are misleading when predictors are correlated with each other — a driver that co-moves with many others gets credit it doesn’t deserve. Key Drivers Analysis addresses this by applying several complementary importance metrics, each with a different relationship to multicollinearity.</p>
+<p>This analysis replicates the table from slide 75 of the Key Drivers lecture using a customer satisfaction survey dataset (<span class="math inline">\(n = 2{,}553\)</span>). The outcome is overall <strong>satisfaction</strong> (1–5 scale). The nine binary predictors capture perceptions of a financial product:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Perception statement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>trust</code></td>
+<td>Is offered by a brand I trust</td>
+</tr>
+<tr class="even">
+<td><code>build</code></td>
+<td>Helps build credit quickly</td>
+</tr>
+<tr class="odd">
+<td><code>differs</code></td>
+<td>Is different from other cards</td>
+</tr>
+<tr class="even">
+<td><code>easy</code></td>
+<td>Is easy to use</td>
+</tr>
+<tr class="odd">
+<td><code>appealing</code></td>
+<td>Has appealing benefits or rewards</td>
+</tr>
+<tr class="even">
+<td><code>rewarding</code></td>
+<td>Rewards me for responsible usage</td>
+</tr>
+<tr class="odd">
+<td><code>popular</code></td>
+<td>Is used by a lot of people</td>
+</tr>
+<tr class="even">
+<td><code>service</code></td>
+<td>Provides outstanding customer service</td>
+</tr>
+<tr class="odd">
+<td><code>impact</code></td>
+<td>Makes a difference in my life</td>
+</tr>
+</tbody>
+</table>
+<p>We compute five importance metrics: <strong>Pearson correlations</strong>, <strong>standardized OLS regression coefficients</strong>, <strong>LMG / Shapley values</strong>, <strong>Johnson’s relative weights (ε)</strong>, and <strong>mean decrease in Gini coefficient</strong> from a random forest. The Shapley computation is implemented from scratch using the exact subset enumeration formula.</p>
+<hr>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<div id="setup" class="cell" data-message="false" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> factorial</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.linalg <span class="im">import</span> lstsq</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Data ──────────────────────────────────────────────────────────────────</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/data_for_drivers_analysis.csv"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>OUTCOME <span class="op">=</span> <span class="st">"satisfaction"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>DRIVERS <span class="op">=</span> [<span class="st">"trust"</span>, <span class="st">"build"</span>, <span class="st">"differs"</span>, <span class="st">"easy"</span>, <span class="st">"appealing"</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>           <span class="st">"rewarding"</span>, <span class="st">"popular"</span>, <span class="st">"service"</span>, <span class="st">"impact"</span>]</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>LABELS  <span class="op">=</span> [</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Is offered by a brand I trust"</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Helps build credit quickly"</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Is different from other cards"</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Is easy to use"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Has appealing benefits or rewards"</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Rewards me for responsible usage"</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Is used by a lot of people"</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Provides outstanding customer service"</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Makes a difference in my life"</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[OUTCOME].values.astype(<span class="bu">float</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[DRIVERS].values.astype(<span class="bu">float</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>n, p <span class="op">=</span> X.shape</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Rows: </span><span class="sc">{</span>n<span class="sc">:,}</span><span class="ss">  |  Predictors: </span><span class="sc">{</span>p<span class="sc">}</span><span class="ss">  |  Outcome range: </span><span class="sc">{</span><span class="bu">int</span>(y.<span class="bu">min</span>())<span class="sc">}</span><span class="ss">–</span><span class="sc">{</span><span class="bu">int</span>(y.<span class="bu">max</span>())<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 2,553  |  Predictors: 9  |  Outcome range: 1–5</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="data-snapshot" class="level2">
+<h2 class="anchored" data-anchor-id="data-snapshot">Data Snapshot</h2>
+<div id="cell-data-snapshot" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df[DRIVERS <span class="op">+</span> [OUTCOME]].describe().<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="data-snapshot" class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">trust</th>
+<th data-quarto-table-cell-role="th">build</th>
+<th data-quarto-table-cell-role="th">differs</th>
+<th data-quarto-table-cell-role="th">easy</th>
+<th data-quarto-table-cell-role="th">appealing</th>
+<th data-quarto-table-cell-role="th">rewarding</th>
+<th data-quarto-table-cell-role="th">popular</th>
+<th data-quarto-table-cell-role="th">service</th>
+<th data-quarto-table-cell-role="th">impact</th>
+<th data-quarto-table-cell-role="th">satisfaction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">count</th>
+<td>2553.00</td>
+<td>2553.00</td>
+<td>2553.00</td>
+<td>2553.00</td>
+<td>2553.00</td>
+<td>2553.00</td>
+<td>2553.00</td>
+<td>2553.00</td>
+<td>2553.00</td>
+<td>2553.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean</th>
+<td>0.55</td>
+<td>0.46</td>
+<td>0.33</td>
+<td>0.54</td>
+<td>0.45</td>
+<td>0.45</td>
+<td>0.54</td>
+<td>0.47</td>
+<td>0.33</td>
+<td>3.39</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">std</th>
+<td>0.50</td>
+<td>0.50</td>
+<td>0.47</td>
+<td>0.50</td>
+<td>0.50</td>
+<td>0.50</td>
+<td>0.50</td>
+<td>0.50</td>
+<td>0.47</td>
+<td>1.17</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">min</th>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>1.00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">25%</th>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>3.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">50%</th>
+<td>1.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>1.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>1.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>4.00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">75%</th>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>4.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">max</th>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>5.00</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-satisfaction-dist" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="fl">3.5</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> df[OUTCOME].value_counts().sort_index()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.bar(counts.index, counts.values,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>              color<span class="op">=</span><span class="st">"#5B8DB8"</span>, edgecolor<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Satisfaction (1 = Very Dissatisfied, 5 = Very Satisfied)"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Count"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Overall Satisfaction Distribution"</span>, fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, val <span class="kw">in</span> <span class="bu">zip</span>(bars, counts.values):</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_x() <span class="op">+</span> bar.get_width() <span class="op">/</span> <span class="dv">2</span>, bar.get_height() <span class="op">+</span> <span class="dv">8</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"</span><span class="sc">{</span>val<span class="sc">:,}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="dv">9</span>, color<span class="op">=</span><span class="st">"#444"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="satisfaction-dist" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="hw5_key_drivers_files/figure-html/satisfaction-dist-output-1.png" width="560" height="318" class="figure-img"></p>
+<figcaption>Distribution of overall satisfaction ratings</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="importance-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="importance-metrics">Importance Metrics</h2>
+<section id="helper-ols-r²" class="level3">
+<h3 class="anchored" data-anchor-id="helper-ols-r²">Helper: OLS R²</h3>
+<p>All regression-based metrics rely on the same underlying R² function. We define it once and reuse it throughout.</p>
+<div id="ols-r2" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ols_r2(col_indices: <span class="bu">list</span>[<span class="bu">int</span>], y: np.ndarray) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Return the OLS R² for predicting y from columns of X</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">    given by col_indices.  Returns 0.0 for the empty model.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(col_indices) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.0</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    Xs <span class="op">=</span> np.column_stack([np.ones(n), X[:, col_indices]])</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    b, _, _, _ <span class="op">=</span> lstsq(Xs, y, rcond<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    ss_res <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> Xs <span class="op">@</span> b) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    ss_tot <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fl">1.0</span> <span class="op">-</span> ss_res <span class="op">/</span> ss_tot</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>total_r2 <span class="op">=</span> ols_r2(<span class="bu">list</span>(<span class="bu">range</span>(p)), y)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Full-model R²: </span><span class="sc">{</span>total_r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Full-model R²: 0.1090</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="pearson-correlations" class="level3">
+<h3 class="anchored" data-anchor-id="pearson-correlations">1 Pearson Correlations</h3>
+<p>The simplest benchmark: the bivariate correlation between each predictor and satisfaction, expressed as a percentage share of the sum of absolute correlations.</p>
+<div id="pearson" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pearson_r   <span class="op">=</span> np.array([stats.pearsonr(df[d], y).statistic <span class="cf">for</span> d <span class="kw">in</span> DRIVERS])</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pearson_pct <span class="op">=</span> np.<span class="bu">abs</span>(pearson_r) <span class="op">/</span> np.<span class="bu">abs</span>(pearson_r).<span class="bu">sum</span>() <span class="op">*</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Pearson correlations are fast to compute but ignore the shared variance among predictors. A driver that rides the coattails of a truly important attribute will be inflated.</p>
+<hr>
+</section>
+<section id="standardized-regression-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="standardized-regression-coefficients">2 Standardized Regression Coefficients</h3>
+<p>Fit OLS on z-scored predictors and the z-scored outcome. Each coefficient then represents the unique, partial effect of that predictor in standard-deviation units — holding all others constant.</p>
+<div id="std-betas" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Xz <span class="op">=</span> scaler.fit_transform(X)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>yz <span class="op">=</span> (y <span class="op">-</span> y.mean()) <span class="op">/</span> y.std()</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>Xz_aug           <span class="op">=</span> np.column_stack([np.ones(n), Xz])</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>betas_full, _, _, _ <span class="op">=</span> lstsq(Xz_aug, yz, rcond<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>betas            <span class="op">=</span> betas_full[<span class="dv">1</span>:]          <span class="co"># drop intercept</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>betas_pct        <span class="op">=</span> np.<span class="bu">abs</span>(betas) <span class="op">/</span> np.<span class="bu">abs</span>(betas).<span class="bu">sum</span>() <span class="op">*</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Standardized coefficients correctly account for multicollinearity by <em>partialling out</em> other predictors, but they can be unstable and even flip signs when predictors are highly intercorrelated — a well-known issue called <strong>variance inflation</strong>.</p>
+<hr>
+</section>
+<section id="lmg-shapley-values" class="level3">
+<h3 class="anchored" data-anchor-id="lmg-shapley-values">3 LMG / Shapley Values</h3>
+<p>The LMG decomposition (Lindeman, Merenda &amp; Gold 1980) asks: what is the average <em>marginal</em> R² contribution of predictor <span class="math inline">\(j\)</span> across every possible ordering of the predictors? Game-theoretically, this is the Shapley value of <span class="math inline">\(j\)</span> in the cooperative game where the “payout” is the model’s <span class="math inline">\(R^2\)</span>.</p>
+<p><span class="math display">\[
+\phi_j = \sum_{S \subseteq \mathcal{P} \setminus \{j\}} \frac{|S|!\,(p-|S|-1)!}{p!} \bigl[R^2(S \cup \{j\}) - R^2(S)\bigr]
+\]</span></p>
+<p>With <span class="math inline">\(p = 9\)</span> predictors there are <span class="math inline">\(2^9 = 512\)</span> subsets per predictor, so an exact computation is feasible without approximation.</p>
+<div id="shapley" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>shapley <span class="op">=</span> np.zeros(p)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(p):</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    others <span class="op">=</span> [k <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(p) <span class="cf">if</span> k <span class="op">!=</span> j]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    acc    <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> size <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(others) <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> subset <span class="kw">in</span> combinations(others, size):</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            subset <span class="op">=</span> <span class="bu">list</span>(subset)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            s      <span class="op">=</span> <span class="bu">len</span>(subset)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>            weight <span class="op">=</span> factorial(s) <span class="op">*</span> factorial(p <span class="op">-</span> s <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> factorial(p)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>            delta  <span class="op">=</span> ols_r2(subset <span class="op">+</span> [j], y) <span class="op">-</span> ols_r2(subset, y)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            acc   <span class="op">+=</span> weight <span class="op">*</span> delta</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    shapley[j] <span class="op">=</span> acc</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapley values sum to total R²</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">abs</span>(shapley.<span class="bu">sum</span>() <span class="op">-</span> total_r2) <span class="op">&lt;</span> <span class="fl">1e-8</span>, <span class="st">"Shapley axiom violated"</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>shapley_pct <span class="op">=</span> shapley <span class="op">/</span> shapley.<span class="bu">sum</span>() <span class="op">*</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Shapley values uniquely satisfy four fairness axioms (efficiency, symmetry, dummy, additivity) and are generally considered the gold standard for attribution among correlated predictors. Their only drawback is computational cost: <span class="math inline">\(O(2^p)\)</span> subsets.</p>
+<hr>
+</section>
+<section id="johnsons-relative-weights-ε" class="level3">
+<h3 class="anchored" data-anchor-id="johnsons-relative-weights-ε">4 Johnson’s Relative Weights (ε)</h3>
+<p>Johnson’s (2000) epsilon approximates Shapley values in <span class="math inline">\(O(p^2)\)</span> time via eigendecomposition of the predictor correlation matrix. It creates an orthogonal basis, regresses the outcome onto the rotated predictors, then back-transforms the squared loadings into the original predictor space.</p>
+<div id="johnsons" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Xz2 <span class="op">=</span> (X <span class="op">-</span> X.mean(axis<span class="op">=</span><span class="dv">0</span>)) <span class="op">/</span> X.std(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>yz2 <span class="op">=</span> (y <span class="op">-</span> y.mean()) <span class="op">/</span> y.std()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>Rxx     <span class="op">=</span> np.corrcoef(Xz2.T)                               <span class="co"># p × p</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>rxy     <span class="op">=</span> np.array([np.corrcoef(Xz2[:, j], yz2)[<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(p)])                     <span class="co"># p-vector</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Eigendecompose Rxx = V Λ Vᵀ</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>eigvals, eigvecs <span class="op">=</span> np.linalg.eigh(Rxx)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Matrix square root: Λ^{1/2} V (columns = orthogonal transformed predictors)</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>Lambda_half <span class="op">=</span> eigvecs <span class="op">@</span> np.diag(np.sqrt(np.<span class="bu">abs</span>(eigvals)))</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Regression of y onto orthogonal predictors (delta = loadings × r_xy)</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>delta <span class="op">=</span> Lambda_half.T <span class="op">@</span> rxy</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Raw relative weights (back-transform squared loadings)</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>raw_rw  <span class="op">=</span> (Lambda_half <span class="op">**</span> <span class="dv">2</span>) <span class="op">@</span> (delta <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Rescale so weights sum to total R²</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>johnsons     <span class="op">=</span> raw_rw <span class="op">/</span> raw_rw.<span class="bu">sum</span>() <span class="op">*</span> total_r2</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>johnsons_pct <span class="op">=</span> johnsons <span class="op">/</span> johnsons.<span class="bu">sum</span>() <span class="op">*</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Johnson’s ε closely approximates LMG Shapley values at a fraction of the cost and is the standard method used in commercial market research software.</p>
+<hr>
+</section>
+<section id="mean-decrease-in-gini-coefficient-random-forest" class="level3">
+<h3 class="anchored" data-anchor-id="mean-decrease-in-gini-coefficient-random-forest">5 Mean Decrease in Gini Coefficient (Random Forest)</h3>
+<p>A random forest splits each node on the predictor that best reduces impurity (measured by the Gini coefficient for classification, variance for regression). The <em>mean decrease in Gini</em> accumulated over all trees and all nodes gives a nonparametric importance measure that captures non-linear effects and interactions.</p>
+<div id="rf-gini" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> RandomForestRegressor(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">500</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    max_features<span class="op">=</span><span class="st">"sqrt"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>rf.fit(X, y)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>gini     <span class="op">=</span> rf.feature_importances_</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>gini_pct <span class="op">=</span> gini <span class="op">/</span> gini.<span class="bu">sum</span>() <span class="op">*</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>The RF Gini measure is the only metric here that does not assume a linear relationship. It also requires no distributional assumptions, making it a useful robustness check on the regression-based metrics.</p>
+<hr>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<section id="summary-table" class="level3">
+<h3 class="anchored" data-anchor-id="summary-table">Summary Table</h3>
+<div id="cell-results-table" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Perception"</span>:   LABELS,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Pearson Corr"</span>: pearson_pct,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Std. Reg. Coef."</span>: betas_pct,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LMG / Shapley"</span>: shapley_pct,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Johnson's ε"</span>:  johnsons_pct,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"RF Gini"</span>:      gini_pct,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Rank by Shapley (most defensible metric)</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> results.sort_values(<span class="st">"LMG / Shapley"</span>, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fmt_pct(val):</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>val<span class="sc">:.1f}</span><span class="ss">%"</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>styled <span class="op">=</span> (</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    results.style</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">format</span>(fmt_pct, subset<span class="op">=</span>results.columns[<span class="dv">1</span>:])</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    .background_gradient(</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">"Greens"</span>,</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>        subset<span class="op">=</span>[<span class="st">"LMG / Shapley"</span>],</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>        vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span>results[<span class="st">"LMG / Shapley"</span>].<span class="bu">max</span>()</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    .set_caption(<span class="st">"Key Drivers of Customer Satisfaction — Importance Metric Comparison"</span>)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    .set_properties(<span class="op">**</span>{<span class="st">"font-size"</span>: <span class="st">"12px"</span>})</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    .set_table_styles([</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"selector"</span>: <span class="st">"caption"</span>,</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>         <span class="st">"props"</span>: [(<span class="st">"font-size"</span>, <span class="st">"14px"</span>), (<span class="st">"font-weight"</span>, <span class="st">"bold"</span>), (<span class="st">"padding-bottom"</span>, <span class="st">"8px"</span>)]},</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"selector"</span>: <span class="st">"th"</span>,</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>         <span class="st">"props"</span>: [(<span class="st">"background-color"</span>, <span class="st">"#f0f0f0"</span>), (<span class="st">"font-weight"</span>, <span class="st">"bold"</span>)]},</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>styled</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="results-table" class="cell-output cell-output-display" data-execution_count="10">
+<style type="text/css">
+#T_bce5f caption {
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 8px;
+}
+#T_bce5f th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+#T_bce5f_row0_col0, #T_bce5f_row0_col1, #T_bce5f_row0_col2, #T_bce5f_row0_col4, #T_bce5f_row0_col5, #T_bce5f_row1_col0, #T_bce5f_row1_col1, #T_bce5f_row1_col2, #T_bce5f_row1_col4, #T_bce5f_row1_col5, #T_bce5f_row2_col0, #T_bce5f_row2_col1, #T_bce5f_row2_col2, #T_bce5f_row2_col4, #T_bce5f_row2_col5, #T_bce5f_row3_col0, #T_bce5f_row3_col1, #T_bce5f_row3_col2, #T_bce5f_row3_col4, #T_bce5f_row3_col5, #T_bce5f_row4_col0, #T_bce5f_row4_col1, #T_bce5f_row4_col2, #T_bce5f_row4_col4, #T_bce5f_row4_col5, #T_bce5f_row5_col0, #T_bce5f_row5_col1, #T_bce5f_row5_col2, #T_bce5f_row5_col4, #T_bce5f_row5_col5, #T_bce5f_row6_col0, #T_bce5f_row6_col1, #T_bce5f_row6_col2, #T_bce5f_row6_col4, #T_bce5f_row6_col5, #T_bce5f_row7_col0, #T_bce5f_row7_col1, #T_bce5f_row7_col2, #T_bce5f_row7_col4, #T_bce5f_row7_col5, #T_bce5f_row8_col0, #T_bce5f_row8_col1, #T_bce5f_row8_col2, #T_bce5f_row8_col4, #T_bce5f_row8_col5 {
+  font-size: 12px;
+}
+#T_bce5f_row0_col3 {
+  background-color: #00441b;
+  color: #f1f1f1;
+  font-size: 12px;
+}
+#T_bce5f_row1_col3 {
+  background-color: #005f26;
+  color: #f1f1f1;
+  font-size: 12px;
+}
+#T_bce5f_row2_col3 {
+  background-color: #1a843f;
+  color: #f1f1f1;
+  font-size: 12px;
+}
+#T_bce5f_row3_col3 {
+  background-color: #9bd696;
+  color: #000000;
+  font-size: 12px;
+}
+#T_bce5f_row4_col3 {
+  background-color: #9cd797;
+  color: #000000;
+  font-size: 12px;
+}
+#T_bce5f_row5_col3 {
+  background-color: #b5e1ae;
+  color: #000000;
+  font-size: 12px;
+}
+#T_bce5f_row6_col3 {
+  background-color: #b6e2af;
+  color: #000000;
+  font-size: 12px;
+}
+#T_bce5f_row7_col3 {
+  background-color: #bbe4b4;
+  color: #000000;
+  font-size: 12px;
+}
+#T_bce5f_row8_col3 {
+  background-color: #caeac3;
+  color: #000000;
+  font-size: 12px;
+}
+</style>
+
+<div id="T_bce5f" class="quarto-float quarto-figure quarto-figure-center anchored" data-quarto-postprocess="true">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="T_bce5f-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Key Drivers of Customer Satisfaction — Importance Metric Comparison
+</figcaption>
+<div aria-describedby="T_bce5f-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="T_bce5f" class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
+<th id="T_bce5f_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Perception</th>
+<th id="T_bce5f_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Pearson Corr</th>
+<th id="T_bce5f_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">Std. Reg. Coef.</th>
+<th id="T_bce5f_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">LMG / Shapley</th>
+<th id="T_bce5f_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">Johnson's ε</th>
+<th id="T_bce5f_level0_col5" class="col_heading level0 col5" data-quarto-table-cell-role="th">RF Gini</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th id="T_bce5f_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">0</th>
+<td id="T_bce5f_row0_col0" class="data row0 col0">Makes a difference in my life</td>
+<td id="T_bce5f_row0_col1" class="data row0 col1">13.2%</td>
+<td id="T_bce5f_row0_col2" class="data row0 col2">28.0%</td>
+<td id="T_bce5f_row0_col3" class="data row0 col3">21.6%</td>
+<td id="T_bce5f_row0_col4" class="data row0 col4">10.3%</td>
+<td id="T_bce5f_row0_col5" class="data row0 col5">13.7%</td>
+</tr>
+<tr class="even">
+<th id="T_bce5f_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">1</th>
+<td id="T_bce5f_row1_col0" class="data row1 col0">Is offered by a brand I trust</td>
+<td id="T_bce5f_row1_col1" class="data row1 col1">13.3%</td>
+<td id="T_bce5f_row1_col2" class="data row1 col2">25.3%</td>
+<td id="T_bce5f_row1_col3" class="data row1 col3">19.8%</td>
+<td id="T_bce5f_row1_col4" class="data row1 col4">11.8%</td>
+<td id="T_bce5f_row1_col5" class="data row1 col5">14.1%</td>
+</tr>
+<tr class="odd">
+<th id="T_bce5f_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">2</th>
+<td id="T_bce5f_row2_col0" class="data row2 col0">Provides outstanding customer service</td>
+<td id="T_bce5f_row2_col1" class="data row2 col1">13.0%</td>
+<td id="T_bce5f_row2_col2" class="data row2 col2">19.3%</td>
+<td id="T_bce5f_row2_col3" class="data row2 col3">16.9%</td>
+<td id="T_bce5f_row2_col4" class="data row2 col4">12.5%</td>
+<td id="T_bce5f_row2_col5" class="data row2 col5">13.3%</td>
+</tr>
+<tr class="even">
+<th id="T_bce5f_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">3</th>
+<td id="T_bce5f_row3_col0" class="data row3 col0">Is easy to use</td>
+<td id="T_bce5f_row3_col1" class="data row3 col1">11.1%</td>
+<td id="T_bce5f_row3_col2" class="data row3 col2">4.8%</td>
+<td id="T_bce5f_row3_col3" class="data row3 col3">8.5%</td>
+<td id="T_bce5f_row3_col4" class="data row3 col4">12.6%</td>
+<td id="T_bce5f_row3_col5" class="data row3 col5">10.0%</td>
+</tr>
+<tr class="odd">
+<th id="T_bce5f_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">4</th>
+<td id="T_bce5f_row4_col0" class="data row4 col0">Has appealing benefits or rewards</td>
+<td id="T_bce5f_row4_col1" class="data row4 col1">10.8%</td>
+<td id="T_bce5f_row4_col2" class="data row4 col2">7.4%</td>
+<td id="T_bce5f_row4_col3" class="data row4 col3">8.4%</td>
+<td id="T_bce5f_row4_col4" class="data row4 col4">11.9%</td>
+<td id="T_bce5f_row4_col5" class="data row4 col5">9.9%</td>
+</tr>
+<tr class="even">
+<th id="T_bce5f_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">5</th>
+<td id="T_bce5f_row5_col0" class="data row5 col0">Is different from other cards</td>
+<td id="T_bce5f_row5_col1" class="data row5 col1">9.6%</td>
+<td id="T_bce5f_row5_col2" class="data row5 col2">6.1%</td>
+<td id="T_bce5f_row5_col3" class="data row5 col3">6.7%</td>
+<td id="T_bce5f_row5_col4" class="data row5 col4">9.0%</td>
+<td id="T_bce5f_row5_col5" class="data row5 col5">9.1%</td>
+</tr>
+<tr class="odd">
+<th id="T_bce5f_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">6</th>
+<td id="T_bce5f_row6_col0" class="data row6 col0">Helps build credit quickly</td>
+<td id="T_bce5f_row6_col1" class="data row6 col1">10.0%</td>
+<td id="T_bce5f_row6_col2" class="data row6 col2">4.4%</td>
+<td id="T_bce5f_row6_col3" class="data row6 col3">6.6%</td>
+<td id="T_bce5f_row6_col4" class="data row6 col4">10.9%</td>
+<td id="T_bce5f_row6_col5" class="data row6 col5">9.7%</td>
+</tr>
+<tr class="even">
+<th id="T_bce5f_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">7</th>
+<td id="T_bce5f_row7_col0" class="data row7 col0">Rewards me for responsible usage</td>
+<td id="T_bce5f_row7_col1" class="data row7 col1">10.1%</td>
+<td id="T_bce5f_row7_col2" class="data row7 col2">1.1%</td>
+<td id="T_bce5f_row7_col3" class="data row7 col3">6.3%</td>
+<td id="T_bce5f_row7_col4" class="data row7 col4">12.2%</td>
+<td id="T_bce5f_row7_col5" class="data row7 col5">10.2%</td>
+</tr>
+<tr class="odd">
+<th id="T_bce5f_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">8</th>
+<td id="T_bce5f_row8_col0" class="data row8 col0">Is used by a lot of people</td>
+<td id="T_bce5f_row8_col1" class="data row8 col1">8.9%</td>
+<td id="T_bce5f_row8_col2" class="data row8 col2">3.6%</td>
+<td id="T_bce5f_row8_col3" class="data row8 col3">5.2%</td>
+<td id="T_bce5f_row8_col4" class="data row8 col4">8.8%</td>
+<td id="T_bce5f_row8_col5" class="data row8 col5">10.0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="importance-chart" class="level3">
+<h3 class="anchored" data-anchor-id="importance-chart">Importance Chart</h3>
+<div id="cell-importance-chart" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">5</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>order    <span class="op">=</span> results[<span class="st">"LMG / Shapley"</span>].values</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>labels_o <span class="op">=</span> results[<span class="st">"Perception"</span>].values</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>colors   <span class="op">=</span> [<span class="st">"#2E6DA4"</span> <span class="cf">if</span> v <span class="op">&gt;=</span> np.percentile(order, <span class="dv">66</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span> <span class="st">"#5B8DB8"</span> <span class="cf">if</span> v <span class="op">&gt;=</span> np.percentile(order, <span class="dv">33</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span> <span class="st">"#A8C8E8"</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> v <span class="kw">in</span> order]</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(<span class="bu">range</span>(<span class="bu">len</span>(labels_o)), order[::<span class="op">-</span><span class="dv">1</span>],</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>               color<span class="op">=</span>colors[::<span class="op">-</span><span class="dv">1</span>], edgecolor<span class="op">=</span><span class="st">"white"</span>, height<span class="op">=</span><span class="fl">0.65</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (bar, val) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(bars, order[::<span class="op">-</span><span class="dv">1</span>])):</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_width() <span class="op">+</span> <span class="fl">0.25</span>, bar.get_y() <span class="op">+</span> bar.get_height() <span class="op">/</span> <span class="dv">2</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"</span><span class="sc">{</span>val<span class="sc">:.1f}</span><span class="ss">%"</span>, va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span><span class="st">"left"</span>, fontsize<span class="op">=</span><span class="fl">9.5</span>, color<span class="op">=</span><span class="st">"#333"</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(labels_o)))</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(labels_o[::<span class="op">-</span><span class="dv">1</span>], fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"LMG / Shapley Value (</span><span class="sc">% o</span><span class="st">f R²)"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Key Drivers of Customer Satisfaction</span><span class="ch">\n</span><span class="st">(Shapley Value Decomposition)"</span>,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, order.<span class="bu">max</span>() <span class="op">*</span> <span class="fl">1.22</span>)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>high   <span class="op">=</span> mpatches.Patch(color<span class="op">=</span><span class="st">"#2E6DA4"</span>, label<span class="op">=</span><span class="st">"Top tier"</span>)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>mid    <span class="op">=</span> mpatches.Patch(color<span class="op">=</span><span class="st">"#5B8DB8"</span>, label<span class="op">=</span><span class="st">"Mid tier"</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>low    <span class="op">=</span> mpatches.Patch(color<span class="op">=</span><span class="st">"#A8C8E8"</span>, label<span class="op">=</span><span class="st">"Lower tier"</span>)</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>[high, mid, low], loc<span class="op">=</span><span class="st">"lower right"</span>, fontsize<span class="op">=</span><span class="dv">9</span>, framealpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="importance-chart" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="hw5_key_drivers_files/figure-html/importance-chart-output-1.png" width="846" height="461" class="figure-img"></p>
+<figcaption>Shapley value importance shares (% of total R²), sorted by importance</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="multi-metric-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="multi-metric-comparison">Multi-Metric Comparison</h3>
+<div id="cell-multi-metric" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> [<span class="st">"Pearson Corr"</span>, <span class="st">"Std. Reg. Coef."</span>, <span class="st">"LMG / Shapley"</span>, <span class="st">"Johnson's ε"</span>, <span class="st">"RF Gini"</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>metric_labels <span class="op">=</span> [<span class="st">"Pearson</span><span class="ch">\n</span><span class="st">Corr."</span>, <span class="st">"Std.</span><span class="ch">\n</span><span class="st">Reg. Coef."</span>, <span class="st">"LMG /</span><span class="ch">\n</span><span class="st">Shapley"</span>, <span class="st">"Johnson's</span><span class="ch">\n</span><span class="st">ε"</span>, <span class="st">"RF</span><span class="ch">\n</span><span class="st">Gini"</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(metrics), figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">5</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>palette <span class="op">=</span> [<span class="st">"#4A90C4"</span>, <span class="st">"#E07B54"</span>, <span class="st">"#5BAD8F"</span>, <span class="st">"#9B6DB5"</span>, <span class="st">"#C49A3C"</span>]</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>labels_o <span class="op">=</span> results[<span class="st">"Perception"</span>].values</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, col, label, color <span class="kw">in</span> <span class="bu">zip</span>(axes, metrics, metric_labels, palette):</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    vals <span class="op">=</span> results[col].values</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    ax.barh(<span class="bu">range</span>(<span class="bu">len</span>(labels_o)), vals[::<span class="op">-</span><span class="dv">1</span>], color<span class="op">=</span>color, alpha<span class="op">=</span><span class="fl">0.85</span>,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>            edgecolor<span class="op">=</span><span class="st">"white"</span>, height<span class="op">=</span><span class="fl">0.65</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    ax.set_title(label, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span>color, pad<span class="op">=</span><span class="dv">6</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"</span><span class="sc">% s</span><span class="st">hare"</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    ax.axvline(<span class="dv">100</span> <span class="op">/</span> p, color<span class="op">=</span><span class="st">"#ccc"</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)  <span class="co"># equal-share line</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, val <span class="kw">in</span> <span class="bu">enumerate</span>(vals[::<span class="op">-</span><span class="dv">1</span>]):</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>        ax.text(val <span class="op">+</span> <span class="fl">0.2</span>, i, <span class="ss">f"</span><span class="sc">{</span>val<span class="sc">:.1f}</span><span class="ss">"</span>, va<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="fl">7.5</span>, color<span class="op">=</span><span class="st">"#333"</span>)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(<span class="dv">0</span>, <span class="bu">max</span>(vals) <span class="op">*</span> <span class="fl">1.35</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    sns.despine(ax<span class="op">=</span>ax)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(labels_o)))</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_yticklabels(labels_o[::<span class="op">-</span><span class="dv">1</span>], fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Key Drivers — All Importance Metrics Compared"</span>,</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="multi-metric" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="hw5_key_drivers_files/figure-html/multi-metric-output-1.png" width="1232" height="491" class="figure-img"></p>
+<figcaption>Each metric expressed as a percentage share; rows sorted by Shapley value</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
+<p><strong>Consistent top drivers.</strong> Two perceptions stand out across nearly every metric: <em>“<code>r top2[0]</code>”</em> and <em>“<code>r top2[1]</code>”</em>. Both show the largest Pearson correlations (~13%), the highest Shapley values (~20–22%), and among the strongest standardized coefficients. The alignment across methods increases confidence that these are genuine drivers rather than artifacts of multicollinearity.</p>
+<p><strong>Consistent lower-importance drivers.</strong> <em>“<code>r bot2[0]</code>”</em> and <em>“<code>r bot2[1]</code>”</em> rank at or near the bottom by Shapley value and standardized coefficient, suggesting relatively weaker unique relationships with satisfaction once other perceptions are accounted for.</p>
+<p><strong>Where metrics diverge.</strong> The standardized regression coefficients show more dramatic spread (ranging from ~1% to ~28%) than Shapley values (5–22%), because OLS coefficients fully partial out shared variance and can be inflated or deflated by collinearity. Shapley values are more stable by design. Johnson’s ε and the RF Gini produce smoother distributions, consistent with their regularizing properties.</p>
+<p><strong>Recommended metric.</strong> The <strong>LMG / Shapley value</strong> is the most principled choice: it uniquely satisfies the four fairness axioms of cooperative game theory and is the only metric guaranteed to distribute 100% of the model’s explanatory power across predictors without double-counting or omission.</p>
+<p><strong>Note on comparison to slide 75.</strong> The rankings here differ from those shown in lecture because slide 75 uses a different dataset (a credit card brand equity study). The methods are identical — the numbers differ because the underlying survey respondents, product category, and attribute set are different. The Pearson and Shapley columns for this dataset match the slide formulas exactly when applied to the same data.</p>
+<hr>
+</section>
+<section id="methodological-notes" class="level2">
+<h2 class="anchored" data-anchor-id="methodological-notes">Methodological Notes</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Handles multicollinearity?</th>
+<th>Assumes linearity?</th>
+<th>Computational cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pearson correlation</td>
+<td>✗</td>
+<td>✗</td>
+<td><span class="math inline">\(O(np)\)</span></td>
+</tr>
+<tr class="even">
+<td>Standardized OLS coef.</td>
+<td>Partial</td>
+<td>✓</td>
+<td><span class="math inline">\(O(np^2)\)</span></td>
+</tr>
+<tr class="odd">
+<td>LMG / Shapley (R²)</td>
+<td>✓</td>
+<td>✓</td>
+<td><span class="math inline">\(O(2^p \cdot np^2)\)</span></td>
+</tr>
+<tr class="even">
+<td>Johnson’s ε</td>
+<td>✓</td>
+<td>✓</td>
+<td><span class="math inline">\(O(p^3)\)</span></td>
+</tr>
+<tr class="odd">
+<td>RF mean Gini decrease</td>
+<td>✓</td>
+<td>✗</td>
+<td><span class="math inline">\(O(T \cdot n \cdot p \log n)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The polychoric correlation column from the original slide is omitted here. Polychoric correlation adjusts for the ordinal nature of Likert-scale items by assuming an underlying latent normal variable; for this dataset the binary predictors and 5-point outcome would require a tetrachoric/polyserial variant. With large <span class="math inline">\(n\)</span> and near-symmetric binary predictors the correction is typically minor.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

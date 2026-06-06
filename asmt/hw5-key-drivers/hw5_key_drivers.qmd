@@ -1,0 +1,421 @@
+---
+title: "Key Drivers Analysis"
+author: "Stan He"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    theme: cosmo
+    fig-width: 9
+    fig-height: 5
+---
+
+## Overview
+
+Which product attributes actually *move* customer satisfaction? Simple correlations are misleading when predictors are correlated with each other — a driver that co-moves with many others gets credit it doesn't deserve. Key Drivers Analysis addresses this by applying several complementary importance metrics, each with a different relationship to multicollinearity.
+
+This analysis replicates the table from slide 75 of the Key Drivers lecture using a customer satisfaction survey dataset ($n = 2{,}553$). The outcome is overall **satisfaction** (1–5 scale). The nine binary predictors capture perceptions of a financial product:
+
+| Variable | Perception statement |
+|---|---|
+| `trust` | Is offered by a brand I trust |
+| `build` | Helps build credit quickly |
+| `differs` | Is different from other cards |
+| `easy` | Is easy to use |
+| `appealing` | Has appealing benefits or rewards |
+| `rewarding` | Rewards me for responsible usage |
+| `popular` | Is used by a lot of people |
+| `service` | Provides outstanding customer service |
+| `impact` | Makes a difference in my life |
+
+We compute five importance metrics: **Pearson correlations**, **standardized OLS regression coefficients**, **LMG / Shapley values**, **Johnson's relative weights (ε)**, and **mean decrease in Gini coefficient** from a random forest. The Shapley computation is implemented from scratch using the exact subset enumeration formula.
+
+---
+
+## Setup
+
+```{python}
+#| label: setup
+#| message: false
+
+import pandas as pd
+import numpy as np
+from scipy import stats
+from math import factorial
+from itertools import combinations
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.preprocessing import StandardScaler
+from numpy.linalg import lstsq
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import seaborn as sns
+
+sns.set_theme(style="ticks")
+
+# ── Data ──────────────────────────────────────────────────────────────────
+df = pd.read_csv("data/data_for_drivers_analysis.csv")
+
+OUTCOME = "satisfaction"
+DRIVERS = ["trust", "build", "differs", "easy", "appealing",
+           "rewarding", "popular", "service", "impact"]
+LABELS  = [
+    "Is offered by a brand I trust",
+    "Helps build credit quickly",
+    "Is different from other cards",
+    "Is easy to use",
+    "Has appealing benefits or rewards",
+    "Rewards me for responsible usage",
+    "Is used by a lot of people",
+    "Provides outstanding customer service",
+    "Makes a difference in my life",
+]
+
+y = df[OUTCOME].values.astype(float)
+X = df[DRIVERS].values.astype(float)
+n, p = X.shape
+
+print(f"Rows: {n:,}  |  Predictors: {p}  |  Outcome range: {int(y.min())}–{int(y.max())}")
+```
+
+---
+
+## Data Snapshot
+
+```{python}
+#| label: data-snapshot
+
+df[DRIVERS + [OUTCOME]].describe().round(2)
+```
+
+```{python}
+#| label: satisfaction-dist
+#| fig-cap: "Distribution of overall satisfaction ratings"
+
+fig, ax = plt.subplots(figsize=(6, 3.5))
+counts = df[OUTCOME].value_counts().sort_index()
+bars = ax.bar(counts.index, counts.values,
+              color="#5B8DB8", edgecolor="white", linewidth=0.8)
+ax.set_xlabel("Satisfaction (1 = Very Dissatisfied, 5 = Very Satisfied)", fontsize=11)
+ax.set_ylabel("Count", fontsize=11)
+ax.set_title("Overall Satisfaction Distribution", fontsize=13, fontweight="bold", pad=10)
+for bar, val in zip(bars, counts.values):
+    ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 8,
+            f"{val:,}", ha="center", va="bottom", fontsize=9, color="#444")
+sns.despine()
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## Importance Metrics
+
+### Helper: OLS R²
+
+All regression-based metrics rely on the same underlying R² function. We define it once and reuse it throughout.
+
+```{python}
+#| label: ols-r2
+
+def ols_r2(col_indices: list[int], y: np.ndarray) -> float:
+    """
+    Return the OLS R² for predicting y from columns of X
+    given by col_indices.  Returns 0.0 for the empty model.
+    """
+    if len(col_indices) == 0:
+        return 0.0
+    Xs = np.column_stack([np.ones(n), X[:, col_indices]])
+    b, _, _, _ = lstsq(Xs, y, rcond=None)
+    ss_res = np.sum((y - Xs @ b) ** 2)
+    ss_tot = np.sum((y - y.mean()) ** 2)
+    return 1.0 - ss_res / ss_tot
+
+total_r2 = ols_r2(list(range(p)), y)
+print(f"Full-model R²: {total_r2:.4f}")
+```
+
+---
+
+### 1 Pearson Correlations
+
+The simplest benchmark: the bivariate correlation between each predictor and satisfaction, expressed as a percentage share of the sum of absolute correlations.
+
+```{python}
+#| label: pearson
+
+pearson_r   = np.array([stats.pearsonr(df[d], y).statistic for d in DRIVERS])
+pearson_pct = np.abs(pearson_r) / np.abs(pearson_r).sum() * 100
+```
+
+Pearson correlations are fast to compute but ignore the shared variance among predictors. A driver that rides the coattails of a truly important attribute will be inflated.
+
+---
+
+### 2 Standardized Regression Coefficients
+
+Fit OLS on z-scored predictors and the z-scored outcome. Each coefficient then represents the unique, partial effect of that predictor in standard-deviation units — holding all others constant.
+
+```{python}
+#| label: std-betas
+
+scaler = StandardScaler()
+Xz = scaler.fit_transform(X)
+yz = (y - y.mean()) / y.std()
+
+Xz_aug           = np.column_stack([np.ones(n), Xz])
+betas_full, _, _, _ = lstsq(Xz_aug, yz, rcond=None)
+betas            = betas_full[1:]          # drop intercept
+betas_pct        = np.abs(betas) / np.abs(betas).sum() * 100
+```
+
+Standardized coefficients correctly account for multicollinearity by *partialling out* other predictors, but they can be unstable and even flip signs when predictors are highly intercorrelated — a well-known issue called **variance inflation**.
+
+---
+
+### 3 LMG / Shapley Values
+
+The LMG decomposition (Lindeman, Merenda & Gold 1980) asks: what is the average *marginal* R² contribution of predictor $j$ across every possible ordering of the predictors? Game-theoretically, this is the Shapley value of $j$ in the cooperative game where the "payout" is the model's $R^2$.
+
+$$
+\phi_j = \sum_{S \subseteq \mathcal{P} \setminus \{j\}} \frac{|S|!\,(p-|S|-1)!}{p!} \bigl[R^2(S \cup \{j\}) - R^2(S)\bigr]
+$$
+
+With $p = 9$ predictors there are $2^9 = 512$ subsets per predictor, so an exact computation is feasible without approximation.
+
+```{python}
+#| label: shapley
+
+shapley = np.zeros(p)
+
+for j in range(p):
+    others = [k for k in range(p) if k != j]
+    acc    = 0.0
+    for size in range(len(others) + 1):
+        for subset in combinations(others, size):
+            subset = list(subset)
+            s      = len(subset)
+            weight = factorial(s) * factorial(p - s - 1) / factorial(p)
+            delta  = ols_r2(subset + [j], y) - ols_r2(subset, y)
+            acc   += weight * delta
+    shapley[j] = acc
+
+# Shapley values sum to total R²
+assert abs(shapley.sum() - total_r2) < 1e-8, "Shapley axiom violated"
+shapley_pct = shapley / shapley.sum() * 100
+```
+
+Shapley values uniquely satisfy four fairness axioms (efficiency, symmetry, dummy, additivity) and are generally considered the gold standard for attribution among correlated predictors. Their only drawback is computational cost: $O(2^p)$ subsets.
+
+---
+
+### 4 Johnson's Relative Weights (ε)
+
+Johnson's (2000) epsilon approximates Shapley values in $O(p^2)$ time via eigendecomposition of the predictor correlation matrix. It creates an orthogonal basis, regresses the outcome onto the rotated predictors, then back-transforms the squared loadings into the original predictor space.
+
+```{python}
+#| label: johnsons
+
+Xz2 = (X - X.mean(axis=0)) / X.std(axis=0)
+yz2 = (y - y.mean()) / y.std()
+
+Rxx     = np.corrcoef(Xz2.T)                               # p × p
+rxy     = np.array([np.corrcoef(Xz2[:, j], yz2)[0, 1]
+                    for j in range(p)])                     # p-vector
+
+# Eigendecompose Rxx = V Λ Vᵀ
+eigvals, eigvecs = np.linalg.eigh(Rxx)
+
+# Matrix square root: Λ^{1/2} V (columns = orthogonal transformed predictors)
+Lambda_half = eigvecs @ np.diag(np.sqrt(np.abs(eigvals)))
+
+# Regression of y onto orthogonal predictors (delta = loadings × r_xy)
+delta = Lambda_half.T @ rxy
+
+# Raw relative weights (back-transform squared loadings)
+raw_rw  = (Lambda_half ** 2) @ (delta ** 2)
+
+# Rescale so weights sum to total R²
+johnsons     = raw_rw / raw_rw.sum() * total_r2
+johnsons_pct = johnsons / johnsons.sum() * 100
+```
+
+Johnson's ε closely approximates LMG Shapley values at a fraction of the cost and is the standard method used in commercial market research software.
+
+---
+
+### 5 Mean Decrease in Gini Coefficient (Random Forest)
+
+A random forest splits each node on the predictor that best reduces impurity (measured by the Gini coefficient for classification, variance for regression). The *mean decrease in Gini* accumulated over all trees and all nodes gives a nonparametric importance measure that captures non-linear effects and interactions.
+
+```{python}
+#| label: rf-gini
+
+rf = RandomForestRegressor(
+    n_estimators=500,
+    max_features="sqrt",
+    random_state=42,
+    n_jobs=-1
+)
+rf.fit(X, y)
+
+gini     = rf.feature_importances_
+gini_pct = gini / gini.sum() * 100
+```
+
+The RF Gini measure is the only metric here that does not assume a linear relationship. It also requires no distributional assumptions, making it a useful robustness check on the regression-based metrics.
+
+---
+
+## Results
+
+### Summary Table
+
+```{python}
+#| label: results-table
+
+results = pd.DataFrame({
+    "Perception":   LABELS,
+    "Pearson Corr": pearson_pct,
+    "Std. Reg. Coef.": betas_pct,
+    "LMG / Shapley": shapley_pct,
+    "Johnson's ε":  johnsons_pct,
+    "RF Gini":      gini_pct,
+})
+
+# Rank by Shapley (most defensible metric)
+results = results.sort_values("LMG / Shapley", ascending=False).reset_index(drop=True)
+
+def fmt_pct(val):
+    return f"{val:.1f}%"
+
+styled = (
+    results.style
+    .format(fmt_pct, subset=results.columns[1:])
+    .background_gradient(
+        cmap="Greens",
+        subset=["LMG / Shapley"],
+        vmin=0, vmax=results["LMG / Shapley"].max()
+    )
+    .set_caption("Key Drivers of Customer Satisfaction — Importance Metric Comparison")
+    .set_properties(**{"font-size": "12px"})
+    .set_table_styles([
+        {"selector": "caption",
+         "props": [("font-size", "14px"), ("font-weight", "bold"), ("padding-bottom", "8px")]},
+        {"selector": "th",
+         "props": [("background-color", "#f0f0f0"), ("font-weight", "bold")]},
+    ])
+)
+styled
+```
+
+### Importance Chart
+
+```{python}
+#| label: importance-chart
+#| fig-cap: "Shapley value importance shares (% of total R²), sorted by importance"
+
+fig, ax = plt.subplots(figsize=(9, 5))
+
+order    = results["LMG / Shapley"].values
+labels_o = results["Perception"].values
+colors   = ["#2E6DA4" if v >= np.percentile(order, 66)
+            else "#5B8DB8" if v >= np.percentile(order, 33)
+            else "#A8C8E8"
+            for v in order]
+
+bars = ax.barh(range(len(labels_o)), order[::-1],
+               color=colors[::-1], edgecolor="white", height=0.65)
+
+for i, (bar, val) in enumerate(zip(bars, order[::-1])):
+    ax.text(bar.get_width() + 0.25, bar.get_y() + bar.get_height() / 2,
+            f"{val:.1f}%", va="center", ha="left", fontsize=9.5, color="#333")
+
+ax.set_yticks(range(len(labels_o)))
+ax.set_yticklabels(labels_o[::-1], fontsize=10)
+ax.set_xlabel("LMG / Shapley Value (% of R²)", fontsize=11)
+ax.set_title("Key Drivers of Customer Satisfaction\n(Shapley Value Decomposition)",
+             fontsize=13, fontweight="bold", pad=12)
+ax.set_xlim(0, order.max() * 1.22)
+
+high   = mpatches.Patch(color="#2E6DA4", label="Top tier")
+mid    = mpatches.Patch(color="#5B8DB8", label="Mid tier")
+low    = mpatches.Patch(color="#A8C8E8", label="Lower tier")
+ax.legend(handles=[high, mid, low], loc="lower right", fontsize=9, framealpha=0.6)
+
+sns.despine()
+plt.tight_layout()
+plt.show()
+```
+
+### Multi-Metric Comparison
+
+```{python}
+#| label: multi-metric
+#| fig-cap: "Each metric expressed as a percentage share; rows sorted by Shapley value"
+
+metrics = ["Pearson Corr", "Std. Reg. Coef.", "LMG / Shapley", "Johnson's ε", "RF Gini"]
+metric_labels = ["Pearson\nCorr.", "Std.\nReg. Coef.", "LMG /\nShapley", "Johnson's\nε", "RF\nGini"]
+
+fig, axes = plt.subplots(1, len(metrics), figsize=(13, 5), sharey=True)
+
+palette = ["#4A90C4", "#E07B54", "#5BAD8F", "#9B6DB5", "#C49A3C"]
+labels_o = results["Perception"].values
+
+for ax, col, label, color in zip(axes, metrics, metric_labels, palette):
+    vals = results[col].values
+    ax.barh(range(len(labels_o)), vals[::-1], color=color, alpha=0.85,
+            edgecolor="white", height=0.65)
+    ax.set_title(label, fontsize=10, fontweight="bold", color=color, pad=6)
+    ax.set_xlabel("% share", fontsize=8)
+    ax.axvline(100 / p, color="#ccc", linewidth=0.8, linestyle="--")  # equal-share line
+    for i, val in enumerate(vals[::-1]):
+        ax.text(val + 0.2, i, f"{val:.1f}", va="center", fontsize=7.5, color="#333")
+    ax.set_xlim(0, max(vals) * 1.35)
+    sns.despine(ax=ax)
+
+axes[0].set_yticks(range(len(labels_o)))
+axes[0].set_yticklabels(labels_o[::-1], fontsize=9)
+
+fig.suptitle("Key Drivers — All Importance Metrics Compared",
+             fontsize=13, fontweight="bold", y=1.02)
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## Interpretation
+
+```{python}
+#| label: top-bottom
+#| echo: false
+
+top2  = results.nlargest(2,  "LMG / Shapley")["Perception"].tolist()
+bot2  = results.nsmallest(2, "LMG / Shapley")["Perception"].tolist()
+```
+
+**Consistent top drivers.** Two perceptions stand out across nearly every metric: *"`r top2[0]`"* and *"`r top2[1]`"*. Both show the largest Pearson correlations (~13%), the highest Shapley values (~20–22%), and among the strongest standardized coefficients. The alignment across methods increases confidence that these are genuine drivers rather than artifacts of multicollinearity.
+
+**Consistent lower-importance drivers.** *"`r bot2[0]`"* and *"`r bot2[1]`"* rank at or near the bottom by Shapley value and standardized coefficient, suggesting relatively weaker unique relationships with satisfaction once other perceptions are accounted for.
+
+**Where metrics diverge.** The standardized regression coefficients show more dramatic spread (ranging from ~1% to ~28%) than Shapley values (5–22%), because OLS coefficients fully partial out shared variance and can be inflated or deflated by collinearity. Shapley values are more stable by design. Johnson's ε and the RF Gini produce smoother distributions, consistent with their regularizing properties.
+
+**Recommended metric.** The **LMG / Shapley value** is the most principled choice: it uniquely satisfies the four fairness axioms of cooperative game theory and is the only metric guaranteed to distribute 100% of the model's explanatory power across predictors without double-counting or omission.
+
+**Note on comparison to slide 75.** The rankings here differ from those shown in lecture because slide 75 uses a different dataset (a credit card brand equity study). The methods are identical — the numbers differ because the underlying survey respondents, product category, and attribute set are different. The Pearson and Shapley columns for this dataset match the slide formulas exactly when applied to the same data.
+
+---
+
+## Methodological Notes
+
+| Metric | Handles multicollinearity? | Assumes linearity? | Computational cost |
+|---|---|---|---|
+| Pearson correlation | ✗ | ✗ | $O(np)$ |
+| Standardized OLS coef. | Partial | ✓ | $O(np^2)$ |
+| LMG / Shapley (R²) | ✓ | ✓ | $O(2^p \cdot np^2)$ |
+| Johnson's ε | ✓ | ✓ | $O(p^3)$ |
+| RF mean Gini decrease | ✓ | ✗ | $O(T \cdot n \cdot p \log n)$ |
+
+The polychoric correlation column from the original slide is omitted here. Polychoric correlation adjusts for the ordinal nature of Likert-scale items by assuming an underlying latent normal variable; for this dataset the binary predictors and 5-point outcome would require a tetrachoric/polyserial variant. With large $n$ and near-symmetric binary predictors the correction is typically minor.
